@@ -1,0 +1,1 @@
+Application Pom to build both ui and application.
