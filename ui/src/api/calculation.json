@@ -1,0 +1,24 @@
+[
+	{
+		"name": "sp",	
+		"type": "text",
+		"label": "Sales Price",
+		"value": "",
+		"isCalculatedField": false	
+	},
+	{
+		"name": "pv",	
+		"type": "text",
+		"label": "Property Value",
+		"value": "",
+		"isCalculatedField": false	
+	},	
+	
+	{
+		"name": "ov",
+		"type": "text",
+		"label": "Original Value",
+		"isCalculatedField": true,
+		"calculationLogic": "[min, sp, pv]"
+	}
+]

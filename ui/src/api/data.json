@@ -1,0 +1,61 @@
+[
+        {
+            "type": "text",
+            "name": "borrowerName",
+            "label": "Borrower Name",
+            "show": "true"            
+        },
+        {
+            "type":"select", 
+            "name":"appStatus", 
+            "label":"Application Status",
+            "show": "true",
+            "value": "Missing",
+            "options": ["Missing","Present", "NA"]           
+        },
+        {
+            "type":"select", 
+            "name":"race", 
+            "label":"Races", 
+            "show": "true",
+            "value": "1",
+            "options": ["1","2","3","4"],
+            "applicabilityCondition" : "modelData.appStatus=='Missing'"            
+        },
+        {
+            "type":"select", 
+            "name":"race1", 
+            "label":"Races 1",
+            "show": "true",
+            "value": "White", 
+            "options": ["White","Black"],       
+            "visibilityCondition" : "modelData.race >= 1"                                               
+        },
+        {
+            "type":"select", 
+            "name":"race2", 
+            "label":"Races 2",
+            "show": "true",
+            "value": "White", 
+            "options": ["White","Black"],       
+            "visibilityCondition" : "modelData.race >= 2"                                   
+        },
+        {
+            "type":"select", 
+            "name":"race3", 
+            "label":"Races 3",
+            "show": "true",
+            "value": "White", 
+            "options": ["White","Black"],       
+            "visibilityCondition" : "modelData.race >= 3"                                   
+        },
+        {
+            "type":"select", 
+            "name":"race4", 
+            "label":"Races 4",
+            "show": "true",
+            "value": "White", 
+            "options": ["White","Black"],       
+            "visibilityCondition" : "modelData.race >= 4"                                   
+        }
+]
