@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tavant.kershaw.entity.DocumentType;
-import com.tavant.kershaw.service.IDocumentTypeManagerService;
+import com.tavant.kershaw.service.DocumentTypeManagerService;
 
 @Controller
 public class DocumentTypeController {
 
 	@Autowired
-	private IDocumentTypeManagerService documentTypeManagerService;
+	private DocumentTypeManagerService documentTypeManagerService;
 	
 	  @RequestMapping(value="/create")
 	  @ResponseBody
