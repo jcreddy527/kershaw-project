@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tavant.kershaw.entity.DocumentType;
-import com.tavant.kershaw.service.IDocumentTypeManagerService;
+import com.tavant.kershaw.service.DocumentTypeManagerService;
 
 @RestController
 @RequestMapping(value = "/documentType")
 public class DocumentTypeController {
 
 	@Autowired
-	private IDocumentTypeManagerService documentTypeManagerService;
+	private DocumentTypeManagerService documentTypeManagerService;
 
 	@CrossOrigin(origins ="*")
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
