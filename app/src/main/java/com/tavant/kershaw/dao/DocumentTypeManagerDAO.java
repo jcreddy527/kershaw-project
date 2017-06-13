@@ -1,5 +1,8 @@
 package com.tavant.kershaw.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -15,7 +18,17 @@ public class DocumentTypeManagerDAO implements IDocumentTypeManagerDAO{
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	public void createDocumentType(DocumentType documentType){
+	public DocumentType createDocumentType(DocumentType documentType){
 		entityManager.persist(documentType);
+		return documentType;
+	}
+	
+	public List<DocumentType> getAllDocumentTypes() {
+		List<DocumentType> documentTypeList = entityManager.createNamedQuery("from kershaw_doc_type.document_type dt", DocumentType.class).getResultList();
+		System.out.println(documentTypeList);
+		if (documentTypeList.size() > 0 && documentTypeList != null) {
+			return documentTypeList;
+		}
+		return new ArrayList<>();
 	}
 }
