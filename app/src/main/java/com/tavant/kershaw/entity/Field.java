@@ -1,6 +1,7 @@
 package com.tavant.kershaw.entity;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -33,18 +34,15 @@ public class Field {
 	@Column(name = "data_type")
 	private String dataType;
 	
-	@Column(name = "field_value")
-	private String fieldValue;
-
 	@ManyToMany(mappedBy = "documentField" , cascade = CascadeType.ALL) 
 	private List<DocumentType> documentType;
 	
 	@OneToMany(fetch = FetchType.LAZY)  
 	@JoinColumn(name = "field_value_id")
-	private FieldPossibleValues fieldPossibleValue;
+	private Set<FieldPossibleValues> fieldPossibleValue;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	private List<Section> sections;
+	private Section sections;
 	
 	public List<DocumentType> getDocumentType() {
 		return documentType;
@@ -86,20 +84,20 @@ public class Field {
 		this.dataType = dataType;
 	}
 
-	public FieldPossibleValues getFieldPossibleValue() {
-		return fieldPossibleValue;
-	}
-
-	public void setFieldPossibleValue(FieldPossibleValues fieldPossibleValue) {
-		this.fieldPossibleValue = fieldPossibleValue;
-	}
-
-	public List<Section> getSections() {
+	public Section getSections() {
 		return sections;
 	}
 
-	public void setSections(List<Section> sections) {
+	public void setSections(Section sections) {
 		this.sections = sections;
 	}
 
+	public Set<FieldPossibleValues> getFieldPossibleValue() {
+		return fieldPossibleValue;
+	}
+
+	public void setFieldPossibleValue(Set<FieldPossibleValues> fieldPossibleValue) {
+		this.fieldPossibleValue = fieldPossibleValue;
+	}
+	
 }
