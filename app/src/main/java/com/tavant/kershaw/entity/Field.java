@@ -32,9 +32,9 @@ public class Field {
 
 	@Column(name = "data_type")
 	private String dataType;
-
-	@Column(name = "section_id")
-	private int sectionId;
+	
+	@Column(name = "field_value")
+	private String fieldValue;
 
 	@ManyToMany(mappedBy = "documentField" , cascade = CascadeType.ALL) 
 	private List<DocumentType> documentType;
@@ -86,14 +86,6 @@ public class Field {
 		this.dataType = dataType;
 	}
 
-	public int getSectionId() {
-		return sectionId;
-	}
-
-	public void setSectionId(int sectionId) {
-		this.sectionId = sectionId;
-	}
-	
 	public FieldPossibleValues getFieldPossibleValue() {
 		return fieldPossibleValue;
 	}
