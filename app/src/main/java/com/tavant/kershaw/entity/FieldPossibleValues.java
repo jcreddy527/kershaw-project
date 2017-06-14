@@ -1,10 +1,14 @@
 package com.tavant.kershaw.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +25,9 @@ public class FieldPossibleValues {
 	
 	@Column(name="field_value")
 	private String fieldValue;
+	
+	@OneToMany(fetch = FetchType.LAZY ,mappedBy="fieldPossibleValue")
+	private List<Field> fields;
 	
 	public int getFieldValueId() {
 		return fieldValueId;
@@ -39,6 +46,12 @@ public class FieldPossibleValues {
 	}
 	public void setFieldValue(String fieldValue) {
 		this.fieldValue = fieldValue;
+	}
+	public List<Field> getFields() {
+		return fields;
+	}
+	public void setFields(List<Field> fields) {
+		this.fields = fields;
 	}
 	
 	
