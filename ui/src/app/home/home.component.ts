@@ -1,7 +1,6 @@
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Component,OnInit } from '@angular/core';
 import { DocumentService } from '../services/document.service';
-import { DocumentType } from './documentType';
 import { Headers, Http,Response,RequestOptions } from '@angular/http';
 import { Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
