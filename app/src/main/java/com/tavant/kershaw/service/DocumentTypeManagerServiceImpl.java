@@ -1,5 +1,7 @@
 package com.tavant.kershaw.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ public class DocumentTypeManagerServiceImpl implements DocumentTypeManagerServic
 
 	@Override
 	public Object getAllDocumentTypes() {
-		// TODO Auto-generated method stub
-		return null;
+		List<DocumentType> allDocumentList =  documentTypeManagerDAO.getAllDocumentTypes();
+		return allDocumentList;
 	}
 }

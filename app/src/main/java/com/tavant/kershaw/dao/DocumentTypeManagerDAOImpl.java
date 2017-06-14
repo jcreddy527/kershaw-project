@@ -24,7 +24,7 @@ public class DocumentTypeManagerDAOImpl implements DocumentTypeManagerDAO{
 	}
 	
 	public List<DocumentType> getAllDocumentTypes() {
-		List<DocumentType> documentTypeList = entityManager.createNamedQuery("from kershaw_doc_type.document_type dt", DocumentType.class).getResultList();
+		List<DocumentType> documentTypeList = entityManager.createQuery("from DocumentType dt", DocumentType.class).getResultList();
 		System.out.println(documentTypeList);
 		if (documentTypeList.size() > 0 && documentTypeList != null) {
 			return documentTypeList;
