@@ -1,4 +1,19 @@
-<div>
-    <h1>
-        Home Page
-    </h1></div>
+<div class="container">   
+    <div class="dropdown">
+        {{pageTitle}}
+        <select  (change)="docType($event)" >
+            <option  *ngFor="let docvalue of docTypeList" [value]="docvalue" >{{docvalue.documentType}}</option>
+        </select>   
+        <button (click)="docName()" >Add Document Type</button>
+    </div> 
+</div>
+<div class="container" [hidden]="!nameEnabled">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <label>Document type name:</label>
+            <input type="text" formControlName="documentType"/>     
+            <button type="submit" [disabled]="!form.valid">Submit</button><br/>
+            <p *ngIf="form.controls.documentType.errors && form.controls.documentType.touched">
+                Document type name is required!!!
+            </p>      
+    </form>
+</div>
