@@ -27,10 +27,6 @@ public class Section {
 	@Column(name="section_desc")
 	private String sectionDesc;
 	
-	@ManyToOne(fetch = FetchType.LAZY)  
-	@JoinColumn(name = "field_id")
-	private Field fields;
-	
 	public int getSectionId() {
 		return sectionId;
 	}
@@ -48,12 +44,6 @@ public class Section {
 	}
 	public void setSectionDesc(String sectionDesc) {
 		this.sectionDesc = sectionDesc;
-	}
-	public Field getFields() {
-		return fields;
-	}
-	public void setFields(Field fields) {
-		this.fields = fields;
 	}
 	
 }

@@ -26,9 +26,6 @@ public class FieldPossibleValues {
 	@Column(name="field_value")
 	private String fieldValue;
 	
-	@OneToMany(fetch = FetchType.LAZY ,mappedBy="fieldPossibleValue")
-	private List<Field> fields;
-	
 	public int getFieldValueId() {
 		return fieldValueId;
 	}
@@ -47,12 +44,4 @@ public class FieldPossibleValues {
 	public void setFieldValue(String fieldValue) {
 		this.fieldValue = fieldValue;
 	}
-	public List<Field> getFields() {
-		return fields;
-	}
-	public void setFields(List<Field> fields) {
-		this.fields = fields;
-	}
-	
-	
 }

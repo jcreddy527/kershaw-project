@@ -15,8 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 @Entity
 @Table(name = "field")
 public class Field {
@@ -41,11 +39,11 @@ public class Field {
 	@ManyToMany(mappedBy = "documentField" , cascade = CascadeType.ALL) 
 	private List<DocumentType> documentType;
 	
-	@ManyToOne(fetch = FetchType.LAZY)  
+	@OneToMany(fetch = FetchType.LAZY)  
 	@JoinColumn(name = "field_value_id")
 	private FieldPossibleValues fieldPossibleValue;
 
-	@OneToMany(fetch = FetchType.LAZY ,mappedBy="fields")
+	@ManyToOne(fetch = FetchType.LAZY)
 	private List<Section> sections;
 	
 	public List<DocumentType> getDocumentType() {
