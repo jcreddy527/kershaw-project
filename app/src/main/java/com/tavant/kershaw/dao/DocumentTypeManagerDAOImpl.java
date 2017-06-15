@@ -1,10 +1,10 @@
 package com.tavant.kershaw.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
@@ -26,9 +26,12 @@ public class DocumentTypeManagerDAOImpl implements DocumentTypeManagerDAO{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<DocumentType> getAllDocumentTypes() {		
-		String sql = "SELECT document_type_id,document_type,document_description FROM kershaw_doc_type.document_type";
-		Query query = entityManager.createNativeQuery(sql);
-		return query.getResultList();
+		List<DocumentType> documentTypeList = entityManager.createQuery("from DocumentType dt", DocumentType.class).getResultList();
+		System.out.println(documentTypeList);
+		if (documentTypeList.size() > 0 && documentTypeList != null) {
+			return documentTypeList;
+		}
+		return new ArrayList<>();
 		
 	}
 }
