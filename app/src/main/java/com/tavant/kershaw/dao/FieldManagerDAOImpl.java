@@ -26,20 +26,16 @@ public class FieldManagerDAOImpl implements FieldManagerDAO{
 	
 	public void createField(RequestData requestData){
 		
+		
+		DocumentType dt = entityManager.find(DocumentType.class, 1);
 		Field fd = new Field();
 		fd.setFieldName(requestData.getFieldName());
 		fd.setDataType(requestData.getDataType());
 		
-		DocumentType dt = new DocumentType();
-		dt = entityManager.find(DocumentType.class, requestData.getDocumentTypeId());
-		List<DocumentType> dtList = new ArrayList<DocumentType>();
-		dtList.add(dt);
-		
 		List<Section> sectionList = entityManager.createQuery("from Section sec", Section.class).getResultList();
 		Set setSection = new HashSet(sectionList);
 		fd.setSections(setSection);
-		
-		List<Field> fieldList = new ArrayList<>();
+		List<Field> fieldList = dt.getDocumentField();
 		fieldList.add(fd);
 		dt.setDocumentField(fieldList);
 		entityManager.merge(dt);
