@@ -1,7 +1,6 @@
 package com.tavant.kershaw.dao;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -27,28 +26,34 @@ public class FieldManagerDAOImpl implements FieldManagerDAO{
 	public void createField(RequestData requestData){
 		
 		
-		DocumentType dt = entityManager.find(DocumentType.class, 1);
+		DocumentType dt = entityManager.find(DocumentType.class, requestData.getDocumentTypeId());
 		Field fd = new Field();
 		fd.setFieldName(requestData.getFieldName());
 		fd.setDataType(requestData.getDataType());
 		
+		Set<FieldPossibleValues> fpvSet = new HashSet<FieldPossibleValues>();
+		FieldPossibleValues fpv = new FieldPossibleValues();
+		String fieldPossibleValues = requestData.getFieldValue();
+		List<String> fieldValuesArray = Arrays.asList(fieldPossibleValues.split(","));
+		for(String fieldValue: fieldValuesArray){
+			fpv.setFieldValue(fieldValue);
+			fpv.setFieldId(dt.getDocumentField().get(0).getFieldId());	
+			fpvSet.add(fpv);
+		}
+		fd.setFieldPossibleValue(fpvSet);
 		List<Section> sectionList = entityManager.createQuery("from Section sec", Section.class).getResultList();
-		Set setSection = new HashSet(sectionList);
-		fd.setSections(setSection);
+		Set<Section> setSection = new HashSet(sectionList);
+		Set<Section> newSectionSet = new HashSet();
+		for(Section sec : setSection){
+			if(sec.getSectionName().equalsIgnoreCase(requestData.getSectionName())){
+				newSectionSet.add(sec);
+			}
+		}
+		fd.setSections(newSectionSet);
 		List<Field> fieldList = dt.getDocumentField();
 		fieldList.add(fd);
 		dt.setDocumentField(fieldList);
 		entityManager.merge(dt);
-		
-		Set<FieldPossibleValues> fpvSet = new HashSet<FieldPossibleValues>();
-		FieldPossibleValues fpv = new FieldPossibleValues();
-		fpv.setFieldValue(requestData.getFieldValue());
-		fpv.setFieldId(dt.getDocumentField().get(0).getFieldId());
-		fpvSet.add(fpv);
-		Iterator iter = fpvSet.iterator();
-		while (iter.hasNext()) {
-			entityManager.merge(iter.next());
-		}
 		
 	}	
 }

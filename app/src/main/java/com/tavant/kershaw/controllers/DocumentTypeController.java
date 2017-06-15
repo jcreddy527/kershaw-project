@@ -1,6 +1,7 @@
 package com.tavant.kershaw.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +28,14 @@ public class DocumentTypeController {
 	@RequestMapping(value = "/getDocumentTypes", method = RequestMethod.GET)
 	public Object getAllDocumentTypes() {
 		Object documentTypeList = documentTypeManagerService.getAllDocumentTypes();
+		return documentTypeList;
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@ResponseBody
+	@RequestMapping(value = "/getDocumentTypesById/{documentTypeId}", method = RequestMethod.GET)
+	public Object getAllDocumentTypesById(@PathVariable("documentTypeId") Integer documentTypeId) {
+		Object documentTypeList = documentTypeManagerService.getAllDocumentTypesById(documentTypeId);
 		return documentTypeList;
 	}
 }

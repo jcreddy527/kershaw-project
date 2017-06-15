@@ -34,4 +34,11 @@ public class DocumentTypeManagerDAOImpl implements DocumentTypeManagerDAO{
 		return new ArrayList<>();
 		
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public DocumentType getAllDocumentTypesById(Integer documentId) {		
+		DocumentType documentType = entityManager.find(DocumentType.class, documentId);
+		return documentType;
+	}
 }

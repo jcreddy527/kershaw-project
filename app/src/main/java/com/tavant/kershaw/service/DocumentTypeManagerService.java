@@ -6,5 +6,5 @@ public interface DocumentTypeManagerService {
 	
 	void createDocumentType(DocumentType docType);
 	public Object getAllDocumentTypes();
-
+	public DocumentType getAllDocumentTypesById(Integer documentId);
 }

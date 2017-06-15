@@ -1,6 +1,5 @@
 package com.tavant.kershaw.entity;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -35,10 +33,7 @@ public class Field {
 	@Column(name = "data_type")
 	private String dataType;
 	
-	@ManyToMany(mappedBy = "documentField" , cascade = CascadeType.ALL) 
-	private List<DocumentType> documentType;
-	
-	@OneToMany(fetch = FetchType.LAZY)  
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)  
 	@JoinColumn(name = "field_id")
 	private Set<FieldPossibleValues> fieldPossibleValue;
 
@@ -46,14 +41,6 @@ public class Field {
 	@JoinTable(name = "field_section", joinColumns = @JoinColumn(name = "field_id", referencedColumnName = "field_id"),
 	inverseJoinColumns = @JoinColumn(name = "section_id", referencedColumnName = "section_id")) 
 	private Set<Section> sections;
-	
-	public List<DocumentType> getDocumentType() {
-		return documentType;
-	}
-
-	public void setDocumentType(List<DocumentType> documentType) {
-		this.documentType = documentType;
-	}
 
 	public int getFieldId() {
 		return fieldId;

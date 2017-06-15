@@ -8,6 +8,6 @@ public interface DocumentTypeManagerDAO {
 
 	DocumentType createDocumentType(DocumentType documentType);
 	public List<DocumentType> getAllDocumentTypes();
-	
+	public DocumentType getAllDocumentTypesById(Integer documentId);
 }
 

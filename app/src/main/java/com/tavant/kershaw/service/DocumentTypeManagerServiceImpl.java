@@ -23,4 +23,10 @@ public class DocumentTypeManagerServiceImpl implements DocumentTypeManagerServic
 		List<DocumentType> allDocumentList =  documentTypeManagerDAO.getAllDocumentTypes();
 		return allDocumentList;
 	}
+	
+	@Override
+	public DocumentType getAllDocumentTypesById(Integer documentId) {
+		DocumentType document =  documentTypeManagerDAO.getAllDocumentTypesById(documentId);
+		return document;
+	}
 }
