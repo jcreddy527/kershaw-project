@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -38,11 +39,13 @@ public class Field {
 	private List<DocumentType> documentType;
 	
 	@OneToMany(fetch = FetchType.LAZY)  
-	@JoinColumn(name = "field_value_id")
+	@JoinColumn(name = "field_id")
 	private Set<FieldPossibleValues> fieldPossibleValue;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Section sections;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "field_section", joinColumns = @JoinColumn(name = "field_id", referencedColumnName = "field_id"),
+	inverseJoinColumns = @JoinColumn(name = "section_id", referencedColumnName = "section_id")) 
+	private Set<Section> sections;
 	
 	public List<DocumentType> getDocumentType() {
 		return documentType;
@@ -84,11 +87,11 @@ public class Field {
 		this.dataType = dataType;
 	}
 
-	public Section getSections() {
+	public Set<Section> getSections() {
 		return sections;
 	}
 
-	public void setSections(Section sections) {
+	public void setSections(Set<Section> sections) {
 		this.sections = sections;
 	}
 

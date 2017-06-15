@@ -1,8 +1,8 @@
 package com.tavant.kershaw.service;
 
-import com.tavant.kershaw.helper.CommonFile;
+import com.tavant.kershaw.helper.RequestData;
 
 public interface FieldManagerService {
 	
-	void createField(CommonFile combinedData);
+	void createField(RequestData combinedData);
 }

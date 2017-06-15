@@ -1,12 +1,19 @@
 package com.tavant.kershaw.helper;
 
-public class CommonFile {
+public class RequestData {
 
+	private int documentTypeId;
 	private String fieldName;
 	private String dataType;
 	private String fieldValue;
 	private String sectionName;
 	
+	public int getDocumentTypeId() {
+		return documentTypeId;
+	}
+	public void setDocumentTypeId(int documentTypeId) {
+		this.documentTypeId = documentTypeId;
+	}
 	public String getFieldName() {
 		return fieldName;
 	}
