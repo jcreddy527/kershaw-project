@@ -9,8 +9,10 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import com.tavant.kershaw.entity.DocumentType;
+import com.tavant.kershaw.entity.DocumentTypeFieldMapping;
 import com.tavant.kershaw.entity.Field;
 import com.tavant.kershaw.entity.FieldPossibleValues;
 import com.tavant.kershaw.entity.Section;
@@ -27,33 +29,40 @@ public class FieldManagerDAOImpl implements FieldManagerDAO{
 		
 		
 		DocumentType dt = entityManager.find(DocumentType.class, requestData.getDocumentTypeId());
+		
 		Field fd = new Field();
 		fd.setFieldName(requestData.getFieldName());
 		fd.setDataType(requestData.getDataType());
 		
-		Set<FieldPossibleValues> fpvSet = new HashSet<FieldPossibleValues>();
-		FieldPossibleValues fpv = new FieldPossibleValues();
-		String fieldPossibleValues = requestData.getFieldValue();
-		List<String> fieldValuesArray = Arrays.asList(fieldPossibleValues.split(","));
-		for(String fieldValue: fieldValuesArray){
-			fpv.setFieldValue(fieldValue);
-			fpv.setFieldId(dt.getDocumentField().get(0).getFieldId());	
-			fpvSet.add(fpv);
-		}
-		fd.setFieldPossibleValue(fpvSet);
-		List<Section> sectionList = entityManager.createQuery("from Section sec", Section.class).getResultList();
-		Set<Section> setSection = new HashSet(sectionList);
-		Set<Section> newSectionSet = new HashSet();
-		for(Section sec : setSection){
+		List<Section> dbSections = entityManager.createQuery("from Section sec", Section.class).getResultList();
+		Set<Section> sectionsToSave = new HashSet();
+		for(Section sec : dbSections){
 			if(sec.getSectionName().equalsIgnoreCase(requestData.getSectionName())){
-				newSectionSet.add(sec);
+				sectionsToSave.add(sec);
 			}
 		}
-		fd.setSections(newSectionSet);
-		List<Field> fieldList = dt.getDocumentField();
-		fieldList.add(fd);
-		dt.setDocumentField(fieldList);
+		
+		fd.setSections(sectionsToSave);
+		Field savedField = entityManager.merge(fd);
+		
+		DocumentTypeFieldMapping docFieldMapping = new DocumentTypeFieldMapping();
+		docFieldMapping.setDocumentType(dt);
+		docFieldMapping.setField(savedField);
+		docFieldMapping.setFieldValue(requestData.getFieldValue());
+		dt.getDocumentTypeField().add(docFieldMapping);
+		
 		entityManager.merge(dt);
 		
+		if(!StringUtils.isEmpty(requestData.getFieldPossibleValue())){
+			String fieldPossibleValues = requestData.getFieldPossibleValue();
+			Set<FieldPossibleValues> fpvSet = new HashSet<FieldPossibleValues>();
+			List<String> fieldValuesArray = Arrays.asList(fieldPossibleValues.split("/"));
+			for(String fieldValue: fieldValuesArray){
+				FieldPossibleValues fpv = new FieldPossibleValues();
+				fpv.setFieldValue(fieldValue);
+				fpv.setFieldId(savedField.getFieldId());
+				entityManager.merge(fpv);
+			}
+		}
 	}	
 }

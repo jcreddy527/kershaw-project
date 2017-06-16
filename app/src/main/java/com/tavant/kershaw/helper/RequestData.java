@@ -7,6 +7,7 @@ public class RequestData {
 	private String dataType;
 	private String fieldValue;
 	private String sectionName;
+	private String fieldPossibleValue;
 	
 	public int getDocumentTypeId() {
 		return documentTypeId;
@@ -38,5 +39,10 @@ public class RequestData {
 	public void setSectionName(String sectionName) {
 		this.sectionName = sectionName;
 	}
-	
+	public String getFieldPossibleValue() {
+		return fieldPossibleValue;
+	}
+	public void setFieldPossibleValue(String fieldPossibleValue) {
+		this.fieldPossibleValue = fieldPossibleValue;
+	}
 }

@@ -1,20 +1,15 @@
 package com.tavant.kershaw.entity;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "document_type")
@@ -30,12 +25,18 @@ public class DocumentType {
 
 	@Column(name = "document_description")
 	private String documentDescription;
+	
+	@OneToMany(mappedBy = "documentType",cascade=CascadeType.ALL)
+	private Set<DocumentTypeFieldMapping> documentTypeFields;
+	
 
+	public Set<DocumentTypeFieldMapping> getDocumentTypeField() {
+		return documentTypeFields;
+	}
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "document_type_field_mapping", joinColumns = @JoinColumn(name = "document_type_id", referencedColumnName = "document_type_id"),
-		inverseJoinColumns = @JoinColumn(name = "field_id", referencedColumnName = "field_id")) 
-	private List<Field> documentField;
+	public void setDocumentTypeField(Set<DocumentTypeFieldMapping> documentTypeField) {
+		this.documentTypeFields = documentTypeField;
+	}
 
 	public int getDocumentTypeId() {
 		return documentTypeId;
@@ -59,14 +60,6 @@ public class DocumentType {
 
 	public void setDocumentDescription(String documentDescription) {
 		this.documentDescription = documentDescription;
-	}
-
-	public List<Field> getDocumentField() {
-		return documentField;
-	}
-
-	public void setDocumentField(List<Field> documentField) {
-		this.documentField = documentField;
 	}
 
 }

@@ -33,14 +33,26 @@ public class Field {
 	@Column(name = "data_type")
 	private String dataType;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)  
+	@OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL)  
 	@JoinColumn(name = "field_id")
-	private Set<FieldPossibleValues> fieldPossibleValue;
+	private Set<FieldPossibleValues> fieldPossibleValues;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "field_section", joinColumns = @JoinColumn(name = "field_id", referencedColumnName = "field_id"),
 	inverseJoinColumns = @JoinColumn(name = "section_id", referencedColumnName = "section_id")) 
 	private Set<Section> sections;
+	
+	@OneToMany(mappedBy = "field")
+	private Set<DocumentTypeFieldMapping> documentTypeFields;
+
+	
+	public Set<DocumentTypeFieldMapping> getDocumentTypeField() {
+		return documentTypeFields;
+	}
+
+	public void setDocumentTypeField(Set<DocumentTypeFieldMapping> documentTypeField) {
+		this.documentTypeFields = documentTypeField;
+	}
 
 	public int getFieldId() {
 		return fieldId;
@@ -82,12 +94,11 @@ public class Field {
 		this.sections = sections;
 	}
 
-	public Set<FieldPossibleValues> getFieldPossibleValue() {
-		return fieldPossibleValue;
+	public Set<FieldPossibleValues> getFieldPossibleValues() {
+		return fieldPossibleValues;
 	}
 
-	public void setFieldPossibleValue(Set<FieldPossibleValues> fieldPossibleValue) {
-		this.fieldPossibleValue = fieldPossibleValue;
+	public void setFieldPossibleValues(Set<FieldPossibleValues> fieldPossibleValues) {
+		this.fieldPossibleValues = fieldPossibleValues;
 	}
-	
 }
