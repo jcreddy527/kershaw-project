@@ -1,24 +1,40 @@
-[
+[		
 	{
-		"name": "sp",	
+		"name": "Loan Amount",	
 		"type": "text",
-		"label": "Sales Price",
+		"label": "Loan Amount",
+        "show": "true",
 		"value": "",
-		"isCalculatedField": false	
+		"section": "section1"
+
 	},
 	{
-		"name": "pv",	
+		"name": "Apprisal Value",	
 		"type": "text",
-		"label": "Property Value",
-		"value": "",
-		"isCalculatedField": false	
-	},	
-	
+		"label": "Apprisal Value",
+        "show": "true",
+		"value": ["A", "B","C","D","E"],
+		"section": "section1"
+	},
 	{
-		"name": "ov",
+		"name": "Field 1",	
 		"type": "text",
-		"label": "Original Value",
-		"isCalculatedField": true,
-		"calculationLogic": "[min, sp, pv]"
+		"label": "Field 1",
+		"show": "true",
+		"value": ["1"],
+		"isCalculatedField": false	,
+		"section": "section2"
+	},
+	{
+		"name": "Field 2",	
+		"type": "select",
+		"label": "Field 2",
+		"show": "true",
+		"value": ["1", "2","3","4","5"],
+		"isCalculatedField": false	,
+		"section": "section2"
 	}
+	
+
+	
 ]
