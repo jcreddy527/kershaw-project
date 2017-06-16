@@ -1,12 +1,13 @@
 package com.tavant.kershaw.vo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SectionVO {
 	
 	private int documentId;
 	private String sectionName;
-	private List<FieldVO> fields;
+	private List<FieldVO> fields = new ArrayList<>();
 	
 	public int getDocumentId() {
 		return documentId;
@@ -26,4 +27,6 @@ public class SectionVO {
 	public void setFields(List<FieldVO> fields) {
 		this.fields = fields;
 	}
+	
+	
 }

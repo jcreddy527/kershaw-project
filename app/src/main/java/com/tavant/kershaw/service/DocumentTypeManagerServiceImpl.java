@@ -66,15 +66,18 @@ public class DocumentTypeManagerServiceImpl implements DocumentTypeManagerServic
 	}
 	
 	@Override
-	public Map<String,List<FieldVO>> getDocumentTypeById(Integer documentId) {
+	public List<SectionVO> getDocumentTypeById(Integer documentId) {
 		DocumentType document =  documentTypeManagerDAO.getAllDocumentTypesById(documentId);
 		return getFieldsGroupBySection(document);
 	}
 	
-	private Map<String,List<FieldVO>> getFieldsGroupBySection(DocumentType record) {
-		Map<String,List<FieldVO>> fieldsBySection = new HashMap<>();
+	private List<SectionVO> getFieldsGroupBySection(DocumentType record) {
+		Map<String,SectionVO> fieldsBySection = new HashMap<>();
 		for (Section section : documentTypeManagerDAO.getFieldSections()){
-			fieldsBySection.put(section.getSectionName(), new ArrayList<>());
+			SectionVO secVO = new SectionVO();
+			secVO.setDocumentId(record.getDocumentTypeId());
+			secVO.setSectionName(section.getSectionName());
+			fieldsBySection.put(section.getSectionName(), secVO);
 		}
 		
 		DocumentTypeVO dt = new DocumentTypeVO();
@@ -87,11 +90,12 @@ public class DocumentTypeManagerServiceImpl implements DocumentTypeManagerServic
 			field.setFieldId(fieldMapping.getField().getFieldId());
 			field.setFieldPossibleValues(fieldMapping.getField().getFieldPossibleValues());
 			field.setFieldValue(fieldMapping.getFieldValue());
+			
 			for(Section section : fieldMapping.getField().getSections()){
-				fieldsBySection.get(section.getSectionName()).add(field);
+				fieldsBySection.get(section.getSectionName()).getFields().add(field);
 			}
 		}
-		return fieldsBySection;
+		return new ArrayList<>(fieldsBySection.values());
 	}
 	
 	@Override
