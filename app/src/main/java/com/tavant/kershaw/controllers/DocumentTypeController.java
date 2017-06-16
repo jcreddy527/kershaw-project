@@ -1,6 +1,7 @@
 package com.tavant.kershaw.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import com.tavant.kershaw.entity.DocumentType;
 import com.tavant.kershaw.helper.RequestData;
 import com.tavant.kershaw.service.DocumentTypeManagerService;
 import com.tavant.kershaw.vo.DocumentTypeVO;
+import com.tavant.kershaw.vo.FieldVO;
 
 @RestController
 @RequestMapping(value = "/documentType")
@@ -39,8 +41,8 @@ public class DocumentTypeController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/get/{documentTypeId}", method = RequestMethod.GET)
-	public DocumentTypeVO getAllDocumentTypesById(@PathVariable("documentTypeId") Integer documentTypeId) {
-		DocumentTypeVO documentTypeList = documentTypeManagerService.getAllDocumentTypesById(documentTypeId);
+	public Map<String,List<FieldVO>> getAllDocumentTypesById(@PathVariable("documentTypeId") Integer documentTypeId) {
+		 Map<String,List<FieldVO>> documentTypeList = documentTypeManagerService.getDocumentTypeById(documentTypeId);
 		return documentTypeList;
 	}
 	

@@ -2,8 +2,10 @@ package com.tavant.kershaw.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import com.tavant.kershaw.entity.Section;
 import com.tavant.kershaw.helper.RequestData;
 import com.tavant.kershaw.vo.DocumentTypeVO;
 import com.tavant.kershaw.vo.FieldVO;
+import com.tavant.kershaw.vo.SectionVO;
 
 @Service
 public class DocumentTypeManagerServiceImpl implements DocumentTypeManagerService{
@@ -52,6 +55,7 @@ public class DocumentTypeManagerServiceImpl implements DocumentTypeManagerServic
 			FieldVO field = new FieldVO();
 			field.setDataType(fieldMapping.getField().getDataType());
 			field.setFieldId(fieldMapping.getField().getFieldId());
+			field.setFieldName(fieldMapping.getField().getFieldName());
 			field.setSections(fieldMapping.getField().getSections());
 			field.setFieldPossibleValues(fieldMapping.getField().getFieldPossibleValues());
 			field.setFieldValue(fieldMapping.getFieldValue());
@@ -62,9 +66,32 @@ public class DocumentTypeManagerServiceImpl implements DocumentTypeManagerServic
 	}
 	
 	@Override
-	public DocumentTypeVO getAllDocumentTypesById(Integer documentId) {
+	public Map<String,List<FieldVO>> getDocumentTypeById(Integer documentId) {
 		DocumentType document =  documentTypeManagerDAO.getAllDocumentTypesById(documentId);
-		return populateDocumentType(document);
+		return getFieldsGroupBySection(document);
+	}
+	
+	private Map<String,List<FieldVO>> getFieldsGroupBySection(DocumentType record) {
+		Map<String,List<FieldVO>> fieldsBySection = new HashMap<>();
+		for (Section section : documentTypeManagerDAO.getFieldSections()){
+			fieldsBySection.put(section.getSectionName(), new ArrayList<>());
+		}
+		
+		DocumentTypeVO dt = new DocumentTypeVO();
+		dt.setDocumentTypeId(record.getDocumentTypeId());
+		Set<DocumentTypeFieldMapping> fieldMappings = record.getDocumentTypeField();
+		for(DocumentTypeFieldMapping fieldMapping : fieldMappings){
+			FieldVO field = new FieldVO();
+			field.setDataType(fieldMapping.getField().getDataType());
+			field.setFieldName(fieldMapping.getField().getFieldName());
+			field.setFieldId(fieldMapping.getField().getFieldId());
+			field.setFieldPossibleValues(fieldMapping.getField().getFieldPossibleValues());
+			field.setFieldValue(fieldMapping.getFieldValue());
+			for(Section section : fieldMapping.getField().getSections()){
+				fieldsBySection.get(section.getSectionName()).add(field);
+			}
+		}
+		return fieldsBySection;
 	}
 	
 	@Override
