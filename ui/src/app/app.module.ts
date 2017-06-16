@@ -6,9 +6,14 @@ import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { AppComponent }  from './app.component';
 import { HomeComponent } from './home/home.component';
 import { DealComponent } from './deal/deal.component';
+import { TreeModule } from 'angular-tree-component';
+import { FullTreeComponent } from './fulltree/fulltree.component';
 import { DocumentService }from './services/document.service';
 import { DealService } from './deal/deal.service';
 import { FieldComponent } from './field/field.component';
+import { FullTreeService } from './fulltree/fulltree.service';
+import { SharedService } from './services/sharedService.service';
+import { TreeNode, TREE_ACTIONS, KEYS, IActionMapping } from 'angular-tree-component';
 
 
 /* Feature Modules */
@@ -17,12 +22,12 @@ import { FieldComponent } from './field/field.component';
   imports: [
     ReactiveFormsModule,
     FormsModule,
+    TreeModule,
     BrowserModule,
     HttpModule,
-    FormsModule,
-    ReactiveFormsModule,
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
+      {path: 'dealSections/:dealComponent', component: DealComponent },
       { path: 'dealSections', component: DealComponent},
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: '**', redirectTo: 'home', pathMatch: 'full' }
@@ -32,9 +37,11 @@ import { FieldComponent } from './field/field.component';
     AppComponent,
     HomeComponent,
     DealComponent,
-    FieldComponent
+    FieldComponent,
+    FullTreeComponent
   ],
-  providers: [ DocumentService,DealService ],
+  providers: [ DocumentService,FullTreeService,DealService,SharedService ],
+
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

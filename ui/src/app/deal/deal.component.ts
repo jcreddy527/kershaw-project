@@ -1,45 +1,68 @@
-import{ Component,Input, OnInit } from '@angular/core'
+import{ Component,Input, OnInit, OnDestroy } from '@angular/core'
 import { FormGroup, FormControl, FormBuilder, AbstractControl } from '@angular/forms';
-import {Http, Response} from '@angular/http'
+import { Response} from '@angular/http'
 import {Observable} from 'rxjs/Observable'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/catch'
 import { DealService } from './deal.service'
+import { RouterModule,ActivatedRoute } from '@angular/router';
+
 
 
 @Component({
     templateUrl: './deal.component.html'
 })
-
 export class DealComponent implements OnInit{  
      
     dataEntryForm: FormGroup
-    formElements: any[] = []
+    formElements: any[]=[]
     flag: boolean=true;
+    routedId: number;
+    fields: any[]=[]
     
-    constructor(private fb: FormBuilder, private _http: Http, private dealService : DealService){
+    constructor(private fb: FormBuilder, private dealService : DealService,private route: ActivatedRoute){
+
+    }
+    ngOnDestroy(){
+        console.log("Deal component destroying : "+this.routedId)
     }
 
+
     ngOnInit(): void{       
+        this.routedId = this.route.snapshot.params['dealComponent'];
+        console.log("routed Id "+this.routedId)                 
         this.dataEntryForm = this.fb.group({})
-        this.dealService.getDealFields().
+        this.dealService.getDealFields(this.routedId).            
             subscribe(
-                jsondata => this.createForm(jsondata),
+                jsondata => {
+                    this.formElements=jsondata,
+                    this.FillFields();
+
+                   console.log("this.fields : "+JSON.stringify(this.formElements))
                 error => console.log("Error: "+error)
-        )                  
-    }      
+                }) 
+        console.log("Done")
+        }      
+
+         FillFields(){
+             for(var i=0;i<this.formElements.length;i++){
+                this.fields.push(this.formElements[i].fields)
+             }
+             console.log("AAAAAA : "+ JSON.stringify(this.fields))
+         }
 
     createForm(jsonData: any){
-        this.formElements = jsonData
+       
         if(this.formElements==null || this.formElements.length==0){
-            this.flag=false;
+            this.flag=true;
         }
         const group = this.fb.group({})        
+   
         this.formElements.forEach(            
             formElment => {
-                const formCtrl = new FormControl(formElment.value)        
-                group.addControl(formElment.name, formCtrl)
+                const formCtrl = new FormControl(formElment.fieldPossibleValues.fieldValue)        
+                group.addControl(formElment.fields.fieldName, formCtrl)
             }
         )        
         this.dataEntryForm = group        

@@ -3,22 +3,43 @@ import { Http,Headers,RequestOptions,Response } from '@angular/http'
 import {Observable } from 'rxjs/Observable'
 import 'rxjs/Rx'
 
+
 @Injectable()
 export class DealService{
-    httpUrl: string = ''
+
     childUpdated = new EventEmitter<any>()
 
-    constructor(private _http: Http){   }
+ httpUrl: string = '/api' + '/documentType/get'
 
-    getDealFields():Observable<any[]>{
+
+    constructor(private _http: Http){ 
+        
+      }
+
+    getDealFields(id):Observable<any[]>{
+         console.log("getDealFields  : DealService " +id)
         return this._http.
-            get(this.httpUrl).
+            get(this.httpUrl+"/"+id).
             map((response: Response) =>
                     <any[]>response.json()                
             ).
             // do(data => console.log('JSON: '+JSON.stringify(data))).
             catch(this.handleError)      
     }
+
+
+// getDocumentObjectById():Observable<any[]>{
+
+//         console.log("getDocumentObject  : DealService " +this.documentModel)
+//          return this._http.
+//             get(this.httpUrl+"/"+this.documentModel.id).
+//             map((response: Response) =>
+//                     response.json()                
+//             ).
+//              //do(data => console.log('JSON: '+JSON.stringify(data))).
+//             catch(this.handleError)          
+//     }
+
 
     private handleError(error: Response){
         // console.error(error)
