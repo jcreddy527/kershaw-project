@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DocumetTypeManagerApplication {
+public class DocumentTypeManagerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DocumetTypeManagerApplication.class, args);
+		SpringApplication.run(DocumentTypeManagerApplication.class, args);
 	}
 }

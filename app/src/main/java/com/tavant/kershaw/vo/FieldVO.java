@@ -16,6 +16,8 @@ public class FieldVO {
 	private Set<FieldPossibleValues> fieldPossibleValues;
 	
 	private Set<Section> sections;
+	
+	private String fieldValue;
 
 	public int getFieldId() {
 		return fieldId;
@@ -55,6 +57,14 @@ public class FieldVO {
 
 	public void setSections(Set<Section> sections) {
 		this.sections = sections;
+	}
+
+	public String getFieldValue() {
+		return fieldValue;
+	}
+
+	public void setFieldValue(String fieldValue) {
+		this.fieldValue = fieldValue;
 	}
 	
 }
