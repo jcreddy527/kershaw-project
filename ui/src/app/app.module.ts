@@ -7,10 +7,9 @@ import { AppComponent }  from './app.component';
 import { HomeComponent } from './home/home.component';
 import { DealComponent } from './deal/deal.component';
 import { DocumentService }from './services/document.service';
-import { TreeModule } from 'angular-tree-component';
-import { FullTreeComponent } from 'app/fulltree/fulltree.component';
 import { DealService } from './deal/deal.service';
-import { FullTreeService } from './fulltree/fulltree.service';
+import { FieldComponent } from './field/field.component';
+
 
 /* Feature Modules */
 
@@ -21,7 +20,6 @@ import { FullTreeService } from './fulltree/fulltree.service';
     BrowserModule,
     HttpModule,
     FormsModule,
-    TreeModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
@@ -34,9 +32,9 @@ import { FullTreeService } from './fulltree/fulltree.service';
     AppComponent,
     HomeComponent,
     DealComponent,
-    FullTreeComponent
+    FieldComponent
   ],
-  providers: [ DocumentService,FullTreeService,DealService ],
+  providers: [ DocumentService,DealService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

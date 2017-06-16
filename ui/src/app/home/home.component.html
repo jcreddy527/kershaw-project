@@ -1,19 +1,47 @@
-<div class="container">   
-    <div class="dropdown">
-        {{pageTitle}}
-        <select  (change)="docType($event)" >
-            <option  *ngFor="let docvalue of docTypeList" [value]="docvalue" >{{docvalue.documentType}}</option>
-        </select>   
-        <button (click)="docName()" >Add Document Type</button>
-    </div> 
-</div>
-<div class="container" [hidden]="!nameEnabled">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <label>Document type name:</label>
-            <input type="text" formControlName="documentType"/>     
-            <button type="submit" [disabled]="!form.valid">Submit</button><br/>
-            <p *ngIf="form.controls.documentType.errors && form.controls.documentType.touched">
-                Document type name is required!!!
-            </p>      
-    </form>
+<div class="container">
+    <h2>Document Section</h2>
+	<div>   
+		<div class="dropdown">
+			Select Document Type :
+			<select  (change)="docType($event)" >
+				<option  *ngFor="let docvalue of docTypeList" [value]="docvalue.documentTypeId" >{{docvalue.documentType}}</option>
+			</select>   
+			<button (click)="docName()" >Add Document Type</button>
+		</div> 
+	</div><br/>
+	<div  *ngIf="nameEnabled">
+		<form class="form-horizontal" [formGroup]="form" (ngSubmit)="onSubmit()">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Document type name:</label>
+				<input type="text"  formControlName="documentType" />     
+				<button type="submit" [disabled]="!form.valid  && !docTypeExist">Submit</button><br/>
+				<p class="alert alert-danger" *ngIf="form.controls.documentType.errors && form.controls.documentType.touched">
+					Document type name is required!!!
+				</p>
+				<p class="alert alert-danger" *ngIf="docTypeExist">
+					Document type name is exist!!!
+				</p>   
+			</div> 
+		</form>	
+	</div>
+	    <div class="container" >
+			<table class="table table-hover" *ngIf="docFieldList && docFieldList.length > 0">
+				<tr>
+					<th class="success">Field Name</th>
+					<th class="info">Field type</th>
+					<th class="success">Field Values</th>
+				</tr>
+				<tr *ngFor="let field of docFieldList">
+					<td>{{field.fieldName}}</td>
+					 <td>{{field.dataType}}</td>
+					<td><table><tr *ngFor="let fielddata of field.fieldPossibleValues"><td >{{fielddata.fieldValue}}</td></tr></table></td>    
+				</tr>
+			</table>
+	    </div>
+	<div >
+		<button (click)="addField()">Add Field</button>
+	</div> 
+	<div *ngIf="fieldinput">    
+		<app-field [selectedDocType]="selectedDocType"></app-field>
+	</div>
 </div>

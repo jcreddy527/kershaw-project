@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, EventEmitter } from '@angular/core'
 import { Http,Headers,RequestOptions,Response } from '@angular/http'
 import {Observable } from 'rxjs/Observable'
 import 'rxjs/Rx'
@@ -6,6 +6,7 @@ import 'rxjs/Rx'
 @Injectable()
 export class DealService{
     httpUrl: string = ''
+    childUpdated = new EventEmitter<any>()
 
     constructor(private _http: Http){   }
 
@@ -36,6 +37,8 @@ export class DealService{
         return body.fields || {}
     }
 
-
+    updateChild(){
+        this.childUpdated.emit("Done!")
+    }
 
 }

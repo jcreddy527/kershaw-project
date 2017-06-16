@@ -1,5 +1,5 @@
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Component,OnInit } from '@angular/core';
+import { Component,OnInit,Input} from '@angular/core';
 import { DocumentService } from '../services/document.service';
 import { Headers, Http,Response,RequestOptions } from '@angular/http';
 import { Observable} from 'rxjs/Rx';
@@ -7,21 +7,20 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/catch'
 @Component({
-    
     templateUrl: './home.component.html'
 })
 export class HomeComponent {
 
+    
     form: FormGroup;
 
-    public pageTitle: string = 'Document Types';
+    public selectedDocType: any;
     public docTypeList =[];
-    public fieldList =[];
+    public docFieldList =[];
     public nameEnabled: boolean=false;
-    public fieldEnable: boolean=false;
-    public fieldinput: boolean=false;
     public errorMessage: string;
-
+    public docTypeExist: boolean;
+    public fieldinput: boolean=false;
     
     docTypeName = new FormControl("", Validators.required);
    
@@ -30,25 +29,59 @@ export class HomeComponent {
             "documentType": this.docTypeName
         });
     }
- 
+    docType(event:any){
+      this.fieldinput = false;  
+      this.docTypeList.forEach(docType => {
+          if(docType && docType.documentTypeId == event.target.value){
+              this.selectedDocType = docType               
+              console.log("Selected Doctype : "+JSON.stringify(this.selectedDocType))
+              return;
+          }
+      })  
+    //   console.log(event)
+    //   this.selectedDocType = event.target.value;
+    this.docFieldList =this.selectedDocType.fields;
+      console.log("data===>"+JSON.stringify(this.selectedDocType));
+    }
     ngOnInit() {
         this.ds.getAllDocumentTypes().subscribe(jsondata => {
-            this.docTypeList=jsondata     
-        },  error => this.errorMessage = <any>error);   
+            this.docTypeList=jsondata 
+            this.selectedDocType =  this.docTypeList[0] 
+            this.docFieldList =this.selectedDocType.fields; 
+            console.log("this.selectedDocType --> "+ JSON.stringify(this.selectedDocType))
+            this.ds.setDocumentType(this.selectedDocType)   
+        },  error => this.errorMessage = <any>error);        
 
-        if(this.fieldList.length>0){
-        this.fieldEnable =true;  
-        }
+        this.ds.childUpdated.subscribe(data => {
+            this.ds.getAllDocumentTypes().subscribe(jsondata => {
+                this.docTypeList=jsondata 
+                this.selectedDocType =  this.docTypeList[0] 
+                this.docFieldList =this.selectedDocType.fields; 
+                console.log("this.selectedDocType --> "+ JSON.stringify(this.selectedDocType))
+                this.ds.setDocumentType(this.selectedDocType)   
+                this.fieldinput = false;
+            },  error => this.errorMessage = <any>error);               
+        })                 
      }
+
     docName(){
         //str ="{"name":this.docTypeName}";
     // this.ds.saveDocName(str);
         this.nameEnabled =true;
     }
- 
- docType(event:any){event.target.value};
 
+     addField(){
+        this.fieldinput = true;
+    }
+ 
     onSubmit(){
+        for(let data of this.docTypeList) {
+            if(data.documentType == this.docTypeName.value){
+                this.docTypeExist =true; 
+                return;               
+            }
+        }
+      
         let body = JSON.stringify(this.form.value);
             let headers = new Headers({ 'Content-Type': 'application/json' });
             let options = new RequestOptions({ headers: headers,method : 'POST'});
@@ -62,7 +95,19 @@ export class HomeComponent {
     this.ds.getAllDocumentTypes().subscribe(jsondata => {
             this.docTypeList=jsondata     
         },  error => this.errorMessage = <any>error);   
-
+    
     }
      
+    childUpdated(event: Event){
+         console.log(event)
+         if(status){
+             this.ds.getAllDocumentTypes().subscribe(jsondata => {
+                    this.docTypeList=jsondata 
+                    this.selectedDocType =  this.docTypeList[0] 
+                    this.docFieldList =this.selectedDocType.fields; 
+                    console.log("this.selectedDocType --> "+ JSON.stringify(this.selectedDocType))
+                    this.ds.setDocumentType(this.selectedDocType)   
+            },  error => this.errorMessage = <any>error); 
+         }
+     }
 }
