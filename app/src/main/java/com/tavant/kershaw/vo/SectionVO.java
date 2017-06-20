@@ -5,16 +5,10 @@ import java.util.List;
 
 public class SectionVO {
 	
-	private int documentId;
+	private int sectionId;
 	private String sectionName;
 	private List<FieldVO> fields = new ArrayList<>();
 	
-	public int getDocumentId() {
-		return documentId;
-	}
-	public void setDocumentId(int documentId) {
-		this.documentId = documentId;
-	}
 	public String getSectionName() {
 		return sectionName;
 	}
@@ -27,6 +21,11 @@ public class SectionVO {
 	public void setFields(List<FieldVO> fields) {
 		this.fields = fields;
 	}
-	
+	public int getSectionId() {
+		return sectionId;
+	}
+	public void setSectionId(int sectionId) {
+		this.sectionId = sectionId;
+	}
 	
 }

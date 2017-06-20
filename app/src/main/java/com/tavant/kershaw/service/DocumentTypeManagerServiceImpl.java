@@ -53,8 +53,21 @@ public class DocumentTypeManagerServiceImpl implements DocumentTypeManagerServic
 			dt.setDocumentTypeId(record.getDocumentTypeId());
 			dt.setDocumentType(record.getDocumentType());
 			dt.setDocumentDescription(record.getDocumentDescription());
+			Map<String, SectionVO>  sectionMap = new HashMap<>();
+			for(DocumentTypeFieldMapping fieldMapping : record.getDocumentTypeField()){
+				for(Section section : fieldMapping.getField().getSections()){
+					 if(!sectionMap.containsKey(section.getSectionName())){
+						 SectionVO sectionVO = new SectionVO();
+						 sectionVO.setSectionName(section.getSectionName());
+						 sectionVO.setSectionId(section.getSectionId());
+						 sectionMap.put(section.getSectionName(), sectionVO);
+					 }
+				}
+			}
+			dt.setSections(new ArrayList<>(sectionMap.values()));
 			responseList.add(dt);
 		});
+		
 		return responseList;
 	}
 
@@ -89,8 +102,9 @@ public class DocumentTypeManagerServiceImpl implements DocumentTypeManagerServic
 		Map<String,SectionVO> fieldsBySection = new HashMap<>();
 		for (Section section : documentTypeManagerDAO.getFieldSections()){
 			SectionVO secVO = new SectionVO();
-			secVO.setDocumentId(record.getDocumentTypeId());
+			//secVO.setDocumentId(record.getDocumentTypeId());
 			secVO.setSectionName(section.getSectionName());
+			secVO.setSectionId(section.getSectionId());
 			fieldsBySection.put(section.getSectionName(), secVO);
 		}
 		
