@@ -102,7 +102,7 @@ public class DocumentTypeManagerServiceImpl implements DocumentTypeManagerServic
 		Map<String,SectionVO> fieldsBySection = new HashMap<>();
 		for (Section section : documentTypeManagerDAO.getFieldSections()){
 			SectionVO secVO = new SectionVO();
-			//secVO.setDocumentId(record.getDocumentTypeId());
+			secVO.setDocumentTypeId(record.getDocumentTypeId());
 			secVO.setSectionName(section.getSectionName());
 			secVO.setSectionId(section.getSectionId());
 			fieldsBySection.put(section.getSectionName(), secVO);
@@ -130,6 +130,16 @@ public class DocumentTypeManagerServiceImpl implements DocumentTypeManagerServic
 	public void updateDocumentWithFields(List<RequestData> requestData){
 		for(RequestData data : requestData){
 			updateDocumentWithField(data);
+		}
+	}
+	
+	@Override
+	public void updateSectionFieldsValue(List<SectionVO> sections){
+		for(SectionVO sectionVO : sections){
+			for(FieldVO fieldVO : sectionVO.getFields()){
+				Field field  = documentTypeManagerDAO.getField(fieldVO.getFieldId());
+				documentTypeManagerDAO.updateDocumentFieldWithValue(sectionVO.getDocumentTypeId(), field, fieldVO.getFieldValue());
+			}
 		}
 	}
 	

@@ -73,4 +73,22 @@ public class DocumentTypeManagerDAOImpl implements DocumentTypeManagerDAO{
 		Field savedField = entityManager.merge(fd);
 		return savedField;
 	}
+	
+	@Override
+	public Field getField(Integer fieldId){
+		return entityManager.find(Field.class, fieldId);
+	}
+	
+	@Override
+	public void updateDocumentFieldWithValue(Integer docTypeId,Field field,String fieldValue){
+		DocumentType dt = entityManager.find(DocumentType.class, docTypeId);
+		for(DocumentTypeFieldMapping fieldMapping : dt.getDocumentTypeField()){
+			if(fieldMapping.getField().getFieldId() == field.getFieldId()){
+				fieldMapping.setFieldValue(fieldValue);
+				break;
+			}
+				
+		}
+		entityManager.merge(dt);
+	}
 }

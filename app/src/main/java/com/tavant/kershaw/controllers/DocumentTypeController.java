@@ -58,9 +58,9 @@ public class DocumentTypeController {
 		documentTypeManagerService.updateDocumentWithField(requestData);
 	}
 	
-	@RequestMapping(value = "/create/fields", method = RequestMethod.POST)
+	@RequestMapping(value = "/fields/values", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
-	public void createDocumentWithField(@RequestBody List<RequestData> requestData) {
-		documentTypeManagerService.updateDocumentWithFields(requestData);
+	public void createDocumentWithField(@RequestBody List<SectionVO> requestData) {
+		documentTypeManagerService.updateSectionFieldsValue(requestData);
 	}
 }
