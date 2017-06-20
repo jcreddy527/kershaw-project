@@ -1,11 +1,36 @@
- [ {
+[
+    {
         "documentTypeId": 1,
-        "documentType": "test",
-        "documentDescription": "testDesc"
+        "documentType": "Test1",
+        "documentDescription": "Test1_desc",
+		"sections": [
+			{ 
+				"sectionId": 1,
+				"sectionName": "Section1",
+				"sectionDesc": "Section1_desc"
+			},
+			{ 
+				"sectionId": 2,
+				"sectionName": "Section2",
+				"sectionDesc": "Section2_desc"
+			}
+		]       
     },
     {
         "documentTypeId": 2,
-        "documentType": "testONE",
-        "documentDescription": "testDescONE"
+        "documentType": "Test2",
+        "documentDescription": "Test2_desc",
+		"sections": [
+			{ 
+				"sectionId": 1,
+				"sectionName": "Section1",
+				"sectionDesc": "Section1_desc"
+			},
+			{ 
+				"sectionId": 2,
+				"sectionName": "Section2",
+				"sectionDesc": "Section2_desc"
+			}
+		]       
     }
- ]
+]

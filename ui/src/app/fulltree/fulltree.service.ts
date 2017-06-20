@@ -5,7 +5,8 @@ import 'rxjs/Rx'
 
 @Injectable()
 export class FullTreeService{
-    httpUrl: string = '/api' + '/documentType/getAll'
+    // httpUrl: string = '/api' + '/documentType/getAll'
+    httpUrl: string = "http://www.mocky.io/v2/5947a1351100005a061173c2"
 
     constructor(private _http: Http){   }
 
