@@ -1,5 +1,6 @@
 package com.tavant.kershaw.vo;
 
+import java.util.List;
 import java.util.Set;
 
 public class DocumentTypeVO {
@@ -11,7 +12,9 @@ public class DocumentTypeVO {
 	private String documentDescription;
 
 	private Set<FieldVO> fields;
-
+	
+	private List<SectionVO> sections;
+	
 	public int getDocumentTypeId() {
 		return documentTypeId;
 	}
@@ -43,4 +46,13 @@ public class DocumentTypeVO {
 	public void setFields(Set<FieldVO> fields) {
 		this.fields = fields;
 	}
+
+	public List<SectionVO> getSections() {
+		return sections;
+	}
+
+	public void setSections(List<SectionVO> sections) {
+		this.sections = sections;
+	}
+
 }
