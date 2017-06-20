@@ -10,12 +10,10 @@ export class DealService {
     childUpdated = new EventEmitter<any>()
 
     // httpUrl: string = '/api' + '/documentType/get'
-    httpUrl: string = 'http://www.mocky.io/v2/5948c1bc1200000f002725f8'
+    // httpUrl: string = 'http://www.mocky.io/v2/5948c1bc1200000f002725f8'
+    httpUrl: string ='http://www.mocky.io/v2/5948cb64120000160127261a'
 
-
-    constructor(private _http: Http) {
-
-    }
+    constructor(private _http: Http) {}
 
     getDealFields(id): Observable<any[]> {
         console.log("getDealFields  : DealService " + id)
