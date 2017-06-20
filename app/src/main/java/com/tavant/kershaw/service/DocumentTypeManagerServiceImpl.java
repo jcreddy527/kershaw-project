@@ -43,6 +43,20 @@ public class DocumentTypeManagerServiceImpl implements DocumentTypeManagerServic
 		});
 		return responseList;
 	}
+	
+	@Override
+	public List<DocumentTypeVO> getDocumentTypesShallow() {
+		List<DocumentType> dbDocs =  documentTypeManagerDAO.getAllDocumentTypes();
+		List<DocumentTypeVO> responseList = new ArrayList<>();
+		dbDocs.stream().forEach((record) -> {
+			DocumentTypeVO dt = new DocumentTypeVO();
+			dt.setDocumentTypeId(record.getDocumentTypeId());
+			dt.setDocumentType(record.getDocumentType());
+			dt.setDocumentDescription(record.getDocumentDescription());
+			responseList.add(dt);
+		});
+		return responseList;
+	}
 
 	private DocumentTypeVO populateDocumentType(DocumentType record) {
 		DocumentTypeVO dt = new DocumentTypeVO();
@@ -66,7 +80,7 @@ public class DocumentTypeManagerServiceImpl implements DocumentTypeManagerServic
 	}
 	
 	@Override
-	public List<SectionVO> getDocumentTypeById(Integer documentId) {
+	public List<SectionVO> getSectionsByDocumentId(Integer documentId) {
 		DocumentType document =  documentTypeManagerDAO.getAllDocumentTypesById(documentId);
 		return getFieldsGroupBySection(document);
 	}

@@ -32,16 +32,23 @@ public class DocumentTypeController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/getAll", method = RequestMethod.GET)
+	@RequestMapping(value = "/withFields", method = RequestMethod.GET)
 	public List<DocumentTypeVO> getAllDocumentTypes() {
 		List<DocumentTypeVO> documentTypeList = documentTypeManagerService.getAllDocumentTypes();
 		return documentTypeList;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/get/{documentTypeId}", method = RequestMethod.GET)
-	public List<SectionVO> getAllDocumentTypesById(@PathVariable("documentTypeId") Integer documentTypeId) {
-		 List<SectionVO> documentTypeList = documentTypeManagerService.getDocumentTypeById(documentTypeId);
+	@RequestMapping(value = "/shallow", method = RequestMethod.GET)
+	public List<DocumentTypeVO> getDocumentTypesShallow() {
+		List<DocumentTypeVO> documentTypeList = documentTypeManagerService.getDocumentTypesShallow();
+		return documentTypeList;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/sections/{documentTypeId}", method = RequestMethod.GET)
+	public List<SectionVO> getSectionsByDocumentId(@PathVariable("documentTypeId") Integer documentTypeId) {
+		 List<SectionVO> documentTypeList = documentTypeManagerService.getSectionsByDocumentId(documentTypeId);
 		return documentTypeList;
 	}
 	

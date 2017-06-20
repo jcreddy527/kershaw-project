@@ -11,7 +11,8 @@ public interface DocumentTypeManagerService {
 	
 	void createDocumentType(DocumentType docType);
 	public List<DocumentTypeVO> getAllDocumentTypes();
-	public List<SectionVO> getDocumentTypeById(Integer documentId);
+	public List<SectionVO> getSectionsByDocumentId(Integer documentId);
 	public void updateDocumentWithFields(List<RequestData> requestData);
 	public void updateDocumentWithField(RequestData requestData);
+	public List<DocumentTypeVO> getDocumentTypesShallow();
 }
