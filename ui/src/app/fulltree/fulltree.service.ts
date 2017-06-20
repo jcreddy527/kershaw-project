@@ -5,8 +5,10 @@ import 'rxjs/Rx'
 
 @Injectable()
 export class FullTreeService{
-    httpUrl: string = '/api' + '/documentType/getAll'
-
+    // httpUrl: string = '/api' + '/documentType/getAll'
+    // httpUrl: string = "http://www.mocky.io/v2/5947a1351100005a061173c2"
+    httpUrl: string ='http://www.mocky.io/v2/5948cb7f120000040127261c'
+ 
     constructor(private _http: Http){   }
 
     getFileNames():Observable<any[]>{
