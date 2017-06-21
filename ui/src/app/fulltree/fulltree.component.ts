@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { TreeNode, TREE_ACTIONS, KEYS, IActionMapping } from 'angular-tree-component';
 import { FullTreeService } from './fulltree.service'
 import { SharedService } from '../services/sharedService.service'
-import { Router,ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable'
 
 
@@ -26,60 +26,69 @@ import { Observable } from 'rxjs/Observable'
 export class FullTreeComponent implements OnInit {
     nodes: any[] = [];
     nodes2: any[] = [];
-    id:number;
-    constructor(private fullService: FullTreeService, private sharedService : SharedService,private router: Router) {
+    id: number;
+    fields: any[] = [];
+    @Output()
+    docSelected = new EventEmitter<string>()
+
+    @Output()
+    sectionSelected = new EventEmitter<any>()
+
+    constructor(private fullService: FullTreeService, private sharedService: SharedService, private router: Router) {
     }
+
     ngOnInit() {
         this.fullService.getFileNames().
             subscribe(
             (jsondata) => {
-                // console.log("Data received: "+JSON.stringify(jsondata))  
+
                 this.nodes = jsondata
                 this.showTree(this.nodes);
             },
             error => console.log("Error: " + error)
             )
-
     }
+
     showTree(nodes: any[]) {
         let myObservable = new Observable<any[]>(observer => {
             let nodesTmp: any[] = []
-           // console.log(" doSomething : "+JSON.stringify(this.nodes))
             nodes.forEach(data => {
+                let sections: string[] = []
+                data.sections.forEach(item => {
+                    let tmp: any = {}
+                    tmp.docId = data.documentTypeId
+                    tmp.name = item.sectionName
+                    tmp.hasChildren = true
+                    sections.push(tmp)
+                })
+
                 nodesTmp.push({
                     expanded: true,
                     name: data.documentType,
                     id: data.documentTypeId,
                     subTitle: data.documentType,
-                    children: [
-                        {
-                            name: 'Section 1',
-                            subTitle: 'Section 1',
-                            hasChildren: false
-                        }, {
-                            name: 'Section 2',
-                            subTitle: 'Section 2',
-                            hasChildren: false
-                        }
-                    ]
+                    children: sections
                 })
                 observer.next(nodesTmp);
                 if (nodes.length == nodesTmp.length) {
                     observer.complete();
                 }
+
             })
         })
         let subscription = myObservable.subscribe((nodedata: any[]) => {
             this.nodes2 = nodedata
         })
     }
-    getDocument(obj, id) {
-        // console.log("myfunction OBJ :" + JSON.stringify(obj))
-        //  console.log("myfunction ID :" + JSON.stringify(id))
-    //    this.sharedService.getDocumentObject(id);
-        const dealComponent = id
-        console.log("rot "+dealComponent)
-        this.router.navigate(['dealSections/'+id]);
-    }
 
+    getDocument(obj, id) {
+        if (obj.children) {
+            this.docSelected.emit(id)
+        } else {
+            let section: any = {}
+            section.docId = obj.docId
+            section.sectionId = obj.name
+            this.sectionSelected.emit(section)
+        }
+    }
 }

@@ -16,5 +16,7 @@ public interface DocumentTypeManagerDAO {
 	public Field saveField(Field fd);
 	public void updateDocumentWithField(Integer docTypeId,Field field,String fieldValue);
 	public void saveFieldPossibleValues(FieldPossibleValues fpv);
+	public Field getField(Integer fieldId);
+	public void updateDocumentFieldWithValue(Integer docTypeId,Field field,String fieldValue);
 }
 

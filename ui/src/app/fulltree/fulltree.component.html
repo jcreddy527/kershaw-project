@@ -1,11 +1,22 @@
 <h4>Document Lists</h4>
- <div style="height: 400px; width: 300px">
-    <tree-root
-      #tree
-      [nodes]="nodes2"
-    >
-      <ng-template #treeNodeTemplate let-node>
-       <span title="{{node.data.subTitle}}" (click)="getDocument(node.data, node.data.id)">{{ node.data.name }}</span>
-      </ng-template> 
-    </tree-root>
-  </div>
+<div style="height: 400px; width: 300px">
+<tree-root [nodes]="nodes2">
+  <ng-template #treeNodeWrapperTemplate let-node let-index="index">
+    <div class="node-wrapper" [style.padding-left]="node.getNodePadding()">      
+      <tree-node-expander [node]="node"></tree-node-expander>
+      <div class="node-content-wrapper"
+        [class.node-content-wrapper-active]="node.isActive"
+        [class.node-content-wrapper-focused]="node.isFocused"
+        (click)="getDocument(node.data, node.data.id)"
+        (dblclick)="node.mouseAction('dblClick', $event)"
+        (contextmenu)="node.mouseAction('contextMenu', $event)"
+        (treeDrop)="node.onDrop($event)"
+        [treeAllowDrop]="node.allowDrop"  
+        [treeDrag]="node"
+        [treeDragEnabled]="node.allowDrag()">
+        <tree-node-content [node]="node" [index]="index"></tree-node-content>
+      </div>
+    </div>
+  </ng-template>
+</tree-root>
+</div>

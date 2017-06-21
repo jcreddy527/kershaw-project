@@ -1,0 +1,36 @@
+<form class='form-horizontal' novalidate (ngSubmit)="save()" [formGroup]='dataEntryForm'>
+	<fieldset>
+		<div>
+			<table border="1px" width='130%' align='right' style="margin-top:1cm">
+				<br>
+				<div *ngFor="let fields1 of fields">
+					<div *ngFor="let formfield of fields1">
+						<div *ngIf="formfield.dataType=='text'">
+							<div class="form-group col-md-6" [ngClass]="">
+								<label class='col-md-6 control-label'>{{formfield.fieldName}}</label>
+								<div class='col-md-6'>
+									<input class="form-control" type="text" value="{{formfield.fieldValue}}" [formControlName]="formfield.fieldId">
+								</div>
+							</div>
+						</div>
+						<div *ngIf="formfield.dataType=='select'">
+							<div class="form-group col-md-6" [ngClass]="">
+								<label class='col-md-6 control-label'>{{formfield.fieldName}}</label>
+								<div class='col-md-6'>
+									<select class="form-control" [formControlName]="formfield.fieldId">                                    
+										<option *ngFor="let option of formfield.fieldPossibleValues" value="{{option.fieldValue}}">{{option.fieldValue}}</option>                                                                       
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+			</table>
+			<span>
+                  <button  class="btn btn-primary"  style="margin-top:2cm" type="submit" [disabled]="false">Submit</button>
+            </span>
+		</div>
+		<br>
+	</fieldset>
+</form>
