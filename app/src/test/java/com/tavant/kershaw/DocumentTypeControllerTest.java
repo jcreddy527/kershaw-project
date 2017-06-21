@@ -4,12 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
@@ -29,9 +24,8 @@ import com.tavant.kershaw.controllers.DocumentTypeController;
 import com.tavant.kershaw.entity.DocumentType;
 import com.tavant.kershaw.helper.RequestData;
 import com.tavant.kershaw.service.DocumentTypeManagerService;
+import com.tavant.kershaw.util.TestUtil;
 import com.tavant.kershaw.vo.DocumentTypeVO;
-import com.tavant.kershaw.vo.FieldVO;
-import com.tavant.kershaw.vo.SectionVO;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = DocumentTypeController.class, secure = false)
@@ -44,53 +38,21 @@ public class DocumentTypeControllerTest {
 	
 	private ObjectMapper map = new ObjectMapper();
 	
-	private  List<DocumentTypeVO> docTypesList = new ArrayList<>();
-	
-	private List<SectionVO> sections = new ArrayList<>();
-	
-	private static final String FIELD_NAME = "Field1";
-	
-	private static final String DOCUMENT_NAME = "Document Type1";
-	
-	private static final String SECTION_NAME = "Document Section 1";
-	
-	@Before
-	public  void setup(){
-		DocumentTypeVO docType = new DocumentTypeVO();
-		docType.setDocumentTypeId(1);
-		docType.setDocumentType(DOCUMENT_NAME);
-		FieldVO field = new FieldVO();
-		field.setFieldId(1);
-		field.setFieldName(FIELD_NAME);
-		Set<FieldVO> fields = new HashSet<>();
-		fields.add(field);
-		docType.setFields(fields);
-		docTypesList.add(docType);
-		
-		SectionVO section = new SectionVO();
-		section.setSectionId(1);
-		section.setDocumentTypeId(1);
-		section.setSectionName(SECTION_NAME);
-		section.getFields().addAll(fields);
-		sections.add(section);
-		
-	}
-	
 	
 	@Test
 	public void testGetDocumentTypesWithFields() throws Exception{
-		Mockito.when(documentTypeManagerService.getAllDocumentTypes()).thenReturn(docTypesList);
+		Mockito.when(documentTypeManagerService.getAllDocumentTypes()).thenReturn(TestUtil.getAllDocumentTypes());
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
 				"/documentType/withFields").accept(
 				MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		String response = result.getResponse().getContentAsString();//TODO : json conversion
-		assertTrue(response.contains(DOCUMENT_NAME) && response.contains(FIELD_NAME));
+		assertTrue(response.contains(TestUtil.DOCUMENT_NAME) && response.contains(TestUtil.FIELD_NAME));
 	}
 	
 	@Test
 	public void testCreateDocumentType() throws Exception{
-		DocumentTypeVO docType = docTypesList.get(0);
+		DocumentTypeVO docType = TestUtil.getDocumentTypeVO();
 		String requestJson = map.writeValueAsString(docType);
 		Mockito.doNothing().when(documentTypeManagerService).createDocumentType(Matchers.any(DocumentType.class));
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -103,36 +65,36 @@ public class DocumentTypeControllerTest {
 	
 	@Test
 	public void testGetDocumentTypesShallow() throws Exception{
-		Mockito.when(documentTypeManagerService.getDocumentTypesShallow()).thenReturn(docTypesList);
+		Mockito.when(documentTypeManagerService.getDocumentTypesShallow()).thenReturn(TestUtil.getAllDocumentTypes());
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
 				"/documentType/shallow").accept(
 				MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		String response = result.getResponse().getContentAsString();//TODO : json conversion
-		assertTrue(response.contains(DOCUMENT_NAME));
+		assertTrue(response.contains(TestUtil.DOCUMENT_NAME));
 	}
 	
 	@Test
 	public void testGetDocumentTypeSections() throws Exception{
-		Mockito.when(documentTypeManagerService.getSectionsByDocumentId(Mockito.anyInt())).thenReturn(sections);
+		Mockito.when(documentTypeManagerService.getSectionsByDocumentId(Mockito.anyInt())).thenReturn(new ArrayList<>(TestUtil.getSectionVOs()));
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-				"/documentType/sections/1").accept(
+				"/documentType/1/sections").accept(
 				MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		String response = result.getResponse().getContentAsString();//TODO : json conversion
-		assertTrue(response.contains(SECTION_NAME) && response.contains(FIELD_NAME));
+		assertTrue(response.contains(TestUtil.SECTION_NAME));
 	}
 	
 	@Test
 	public void testCreateField() throws Exception{
 		RequestData requestData = new RequestData();
 		requestData.setDocumentTypeId(1);
-		requestData.setFieldName(FIELD_NAME);
+		requestData.setFieldName(TestUtil.FIELD_NAME);
 		requestData.setFieldPossibleValue("ABC/DEF");
 		String requestJson = map.writeValueAsString(requestData);
 		Mockito.doNothing().when(documentTypeManagerService).updateDocumentWithField(Matchers.any(RequestData.class));
 		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.post("/documentType/create/field")
+				.post("/documentType/field")
 				.accept(MediaType.APPLICATION_JSON).content(requestJson)
 				.contentType(MediaType.APPLICATION_JSON);
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
