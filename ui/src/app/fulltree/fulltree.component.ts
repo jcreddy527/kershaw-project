@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { TreeNode, TREE_ACTIONS, KEYS, IActionMapping } from 'angular-tree-component';
 import { FullTreeService } from './fulltree.service'
-import { SharedService } from '../services/sharedService.service'
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable'
 
@@ -34,7 +33,7 @@ export class FullTreeComponent implements OnInit {
     @Output()
     sectionSelected = new EventEmitter<any>()
 
-    constructor(private fullService: FullTreeService, private sharedService: SharedService, private router: Router) {
+    constructor(private fullService: FullTreeService,private router: Router) {
     }
 
     ngOnInit() {

@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormGroup, FormControl, Validators, FormBuilder,ReactiveFormsModule } from '@angular/forms';
-import { Component,OnInit,Input, OnDestroy, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit, Input, OnDestroy, EventEmitter } from '@angular/core';
 import { DocumentService } from '../services/document.service';
-import { Headers, Http,Response,RequestOptions } from '@angular/http';
+import { Headers, Http, Response, RequestOptions } from '@angular/http';
 import { Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do'
@@ -15,11 +15,11 @@ describe('FieldComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-       imports:[ReactiveFormsModule],
-      declarations: [ FieldComponent ],
-        providers: [{provide : Http },{provide:DocumentService,useClass:DocumentService}],
+      imports: [ReactiveFormsModule],
+      declarations: [FieldComponent],
+      providers: [{ provide: Http }, { provide: DocumentService, useClass: DocumentService }],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -32,26 +32,15 @@ describe('FieldComponent', () => {
     expect(component).toBeDefined();
   });
 
-    it('should be created with default field name', () => {
+  it('should be created with default field name', () => {
     expect(component.form.controls['fieldName'].value).toBe('');
-  }); 
-
-   it('should be created with default datatype ', () => {
-    expect(component.form.controls['dataType'].value).toBe('Radio');
-  }); 
-
-   it('should be created with default section name ', () => {
-    expect(component.form.controls['sectionName'].value).toBe('Document Section 1');
   });
 
-  //  it('should be post data ', () => {
-   //   component.form.addControl("documentTypeId", new FormControl(1))
-    //  component.form.controls['fieldName'].setValue('abcd');
-    //  component.form.controls['dataType'].setValue('Radio');
-    //  component.form.controls['fieldPossibleValue'].setValue('abc/xyz');
-    //  component.form.controls['sectionName'].setValue('Document Section 1');
-     // component.onSubmit();
-  //  expect(component.form.value).toBe();
- // });
+  it('should be created with default datatype ', () => {
+    expect(component.form.controls['dataType'].value).toBe('Radio');
+  });
 
+  it('should be created with default section name ', () => {
+    expect(component.form.controls['sectionName'].value).toBe('Document Section 1');
+  });
 });

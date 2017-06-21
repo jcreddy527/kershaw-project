@@ -8,9 +8,12 @@ import 'rxjs/add/operator/catch'
 @Injectable()
 export class DocumentService {
 
-    childUpdated = new EventEmitter<any>()
- documentType = new EventEmitter<any>()
- private httpUrl = 'http://localhost:8080/documentType/withFields';  // URL to web api
+ childUpdated = new EventEmitter<any>()
+
+ public fieldAdded = new EventEmitter<any>();
+ public hideFieldForm = new EventEmitter<boolean>()
+
+ private httpUrl = 'api'+'/documentType/shallow';  // URL to web api
  
 constructor(private http: Http) {         
 }
@@ -24,10 +27,16 @@ constructor(private http: Http) {
             .catch(this.handleError)      
     }
 
- setDocumentType(docType: any){
-        // console.log("Data aarrived: "+JSON.stringify(docType))
-         this.documentType.emit(docType);
- }  
+getDocumentType(docId:String):Observable<any[]>{
+         return this.http.get('api'+'/documentType/'+docId+'/sections').
+            map((response: Response) =>
+                    <any[]>response.json()                
+            ).
+            do(data => console.log('Done!'))
+            .catch(this.handleError)      
+    }
+
+ 
  
  private handleError(error: Response){
         // console.error(error)

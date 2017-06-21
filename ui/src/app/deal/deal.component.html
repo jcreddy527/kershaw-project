@@ -6,13 +6,16 @@
 				<div class="form-group col-md-5">
 					<app-fulltree (docSelected)="updateForm($event)" (sectionSelected)="updatedSection($event)"></app-fulltree>
 				</div>
+
 				<div class="col-md-15" style="margin-right:2cm" *ngFor="let loanform of loanforms">
 					<app-loanform [documentID]="loanform"></app-loanform>
 				</div>
 				<div class="col-md-15" style="margin-right:2cm" *ngFor="let sectionForm of sectionForms">
 					<app-sectionform [section]="sectionForm"></app-sectionform>
+
 				</div>
 			</div>
 		</div>
 	</nav>
-</div>
+
+	</div>

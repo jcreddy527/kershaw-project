@@ -13,9 +13,8 @@ import { SectionFormComponent } from './sectionform/sectionform.component';
 import { DocumentService }from './services/document.service';
 import { DealService } from './deal/deal.service';
 import { FieldComponent } from './field/field.component';
-import { FullTreeService } from './fulltree/fulltree.service';
-import { SharedService } from './services/sharedService.service';
-import { TreeNode, TREE_ACTIONS, KEYS, IActionMapping } from 'angular-tree-component';
+import { FullTreeService } from './fulltree/fulltree.service'
+
 
 
 /* Feature Modules */
@@ -24,9 +23,9 @@ import { TreeNode, TREE_ACTIONS, KEYS, IActionMapping } from 'angular-tree-compo
   imports: [
     ReactiveFormsModule,
     FormsModule,
-    TreeModule,
     BrowserModule,
     HttpModule,
+    TreeModule,
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
       {path: 'dataEntry/:dealComponent', component: DealComponent },
@@ -44,7 +43,7 @@ import { TreeNode, TREE_ACTIONS, KEYS, IActionMapping } from 'angular-tree-compo
     FullFieldFormComponent,
     SectionFormComponent
   ],
-  providers: [ DocumentService,FullTreeService,DealService,SharedService],
+  providers: [ DocumentService,FullTreeService,DealService],
 
   bootstrap: [ AppComponent ]
 })
