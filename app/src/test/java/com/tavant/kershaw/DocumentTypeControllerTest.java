@@ -41,7 +41,7 @@ public class DocumentTypeControllerTest {
 	
 	@Test
 	public void testGetDocumentTypesWithFields() throws Exception{
-		Mockito.when(documentTypeManagerService.getAllDocumentTypes()).thenReturn(TestUtil.getAllDocumentTypes());
+		Mockito.when(documentTypeManagerService.getAllDocumentTypes()).thenReturn(TestUtil.getAllDocumentTypeVOs());
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
 				"/documentType/withFields").accept(
 				MediaType.APPLICATION_JSON);
@@ -65,7 +65,7 @@ public class DocumentTypeControllerTest {
 	
 	@Test
 	public void testGetDocumentTypesShallow() throws Exception{
-		Mockito.when(documentTypeManagerService.getDocumentTypesShallow()).thenReturn(TestUtil.getAllDocumentTypes());
+		Mockito.when(documentTypeManagerService.getDocumentTypesShallow()).thenReturn(TestUtil.getAllDocumentTypeVOs());
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
 				"/documentType/shallow").accept(
 				MediaType.APPLICATION_JSON);

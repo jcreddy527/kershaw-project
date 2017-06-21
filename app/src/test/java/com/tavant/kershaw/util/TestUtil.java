@@ -22,7 +22,7 @@ public class TestUtil {
 	public static final String SECTION_NAME = "Document Section 1";
 	
 	
-	public static List<DocumentTypeVO> getAllDocumentTypes(){
+	public static List<DocumentTypeVO> getAllDocumentTypeVOs(){
 		List<DocumentTypeVO> docTypesList = new ArrayList<>();
 		DocumentTypeVO docType = getDocumentTypeVO();
 		docType.setFields(getFieldVOs());
@@ -74,12 +74,7 @@ public class TestUtil {
 		fd.setFieldId(1);
 		fd.setFieldName(FIELD_NAME);
 		
-		Section section = new Section();
-		section.setSectionId(1);
-		section.setSectionName("Document Section 1");
-		
 		Set<Section> sections = new HashSet<>();
-		sections.add(section);
 		fd.setSections(sections);
 		
 		DocumentTypeFieldMapping docFieldMapping = new DocumentTypeFieldMapping();
@@ -91,6 +86,27 @@ public class TestUtil {
 		fd.setDocumentTypeField(mappingList);
 		docType.setDocumentTypeField(mappingList);
 		return docType;
+	}
+	
+	public static  List<DocumentType> getAllDocumentTypes(){
+		List<DocumentType> docTypesList = new ArrayList<>();
+		docTypesList.add(getDocumentType());
+		return docTypesList;
+	}
+	
+	public static List<Section> getSections(){
+		Section section1 = new Section();
+		section1.setSectionId(1);
+		section1.setSectionName("Document Section 1");
+		
+		Section section2 = new Section();
+		section2.setSectionId(2);
+		section2.setSectionName("Document Section 2");
+		List<Section> sections = new ArrayList<>();
+		sections.add(section1);
+		sections.add(section2);
+		
+		return sections;
 	}
 	
 }
