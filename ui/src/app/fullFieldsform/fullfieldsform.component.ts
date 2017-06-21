@@ -7,7 +7,7 @@ import { DealService } from '../deal/deal.service'
     templateUrl: './fullfieldsform.component.html'
 })
 export class FullFieldFormComponent implements OnInit{
-
+    pagesTitle :string
     dataEntryForm: FormGroup
     sections: any[] = []
     fields: any[] = []
@@ -45,6 +45,7 @@ export class FullFieldFormComponent implements OnInit{
     }
 
     save() {
+        this.pagesTitle='Form Submitted'
         this.formElements.forEach(frmElm => {
             frmElm.fields.forEach(fld => {
                 fld.fieldValue = this.dataEntryForm.value[fld.fieldId]

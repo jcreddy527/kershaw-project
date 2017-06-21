@@ -7,6 +7,7 @@ import { DealService } from '../deal/deal.service'
     templateUrl: './sectionform.component.html'
 })
 export class SectionFormComponent implements OnInit {
+    pagesTitle :string
     dataEntryForm: FormGroup
     formElements: any[] = []
     fields: any[] = []
@@ -63,5 +64,6 @@ export class SectionFormComponent implements OnInit {
         sections.push(section)
         console.log(JSON.stringify(sections))
         this.dealService.saveFields(sections)
+        this.pagesTitle = "Fields updated";
     }
 }
