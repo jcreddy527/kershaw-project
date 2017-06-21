@@ -10,12 +10,13 @@ export class DocumentService {
 
     childUpdated = new EventEmitter<any>()
  documentType = new EventEmitter<any>()
- private httpUrl = 'http://localhost:8080/documentType/getAll';  // URL to web api
+ private httpUrl = 'http://localhost:8080/documentType/withFields';  // URL to web api
  
 constructor(private http: Http) {         
 }
  
- getAllDocumentTypes():Observable<any[]>{return this.http.get(this.httpUrl).
+ getAllDocumentTypes():Observable<any[]>{
+         return this.http.get(this.httpUrl).
             map((response: Response) =>
                     <any[]>response.json()                
             ).
@@ -24,7 +25,7 @@ constructor(private http: Http) {
     }
 
  setDocumentType(docType: any){
-         console.log("Data aarrived: "+JSON.stringify(docType))
+        // console.log("Data aarrived: "+JSON.stringify(docType))
          this.documentType.emit(docType);
  }  
  

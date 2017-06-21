@@ -18,24 +18,17 @@ export class FieldComponent implements OnInit, OnDestroy {
 
   constructor(fb: FormBuilder,private ds:DocumentService,private http: Http) {
         this.form = fb.group({
-            "fieldName": this.fieldName,
-            "dataType": this.fieldType,
-            "fieldPossibleValue": this.fieldPossibleValue,
-            "sectionName": this.fieldSec,
+            "fieldName": new FormControl('',Validators.required),
+            "dataType": new FormControl('Radio',Validators.required),
+            "fieldPossibleValue": new FormControl('',Validators.required),
+            "sectionName": new FormControl('Document Section 1',Validators.required)
          
         });
 
     }
    form: FormGroup;
-    fieldName = new FormControl('',Validators.required)
-    fieldType = new FormControl('Radio',Validators.required)
-    fieldPossibleValue = new FormControl('',Validators.required)
-    fieldSec = new FormControl('Document Section 1',Validators.required)
-    
-    public fieldList =[];
-    // public fieldinput: boolean=false;
+ 
     public selectdatatype: boolean=true;
-    public updated = new EventEmitter<boolean>()
 
   ngOnDestroy(){
     console.log("Field component Destroying...")
@@ -60,13 +53,15 @@ export class FieldComponent implements OnInit, OnDestroy {
 
 
 dataTypeChange(event:any){
-  console.log();
+
   if(event.target.value =="Text"){
     this.selectdatatype =false;
+    this.form.removeControl("fieldPossibleValue");
     return
   }
+  console.log("-------------");
    this.selectdatatype =true;
-   
+   this.form.addControl("fieldPossibleValue", new FormControl("", Validators.required));
   
 }
 

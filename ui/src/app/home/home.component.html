@@ -3,29 +3,29 @@
 	<div>   
 		<div class="dropdown">
 			Select Document Type :
-			<select  (change)="docType($event)" >
+			<select  class="btn btn-default dropdown-toggle" (change)="docType($event)" >
 				<option  *ngFor="let docvalue of docTypeList" [value]="docvalue.documentTypeId" >{{docvalue.documentType}}</option>
 			</select>   
-			<button (click)="docName()" >Add Document Type</button>
+			<button class="btn btn-default" (click)="docName()" >Add Document Type</button>
 		</div> 
 	</div><br/>
 	<div  *ngIf="nameEnabled">
 		<form class="form-horizontal" [formGroup]="form" (ngSubmit)="onSubmit()">
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Document type name:</label>
-				<input type="text"  formControlName="documentType" />     
-				<button type="submit" [disabled]="!form.valid  && !docTypeExist">Submit</button><br/>
+				<label for="documentType" lass="col-sm-2 control-label">Document type name:</label>
+				<input type="text"  id="documentType "class="form-control" formControlName="documentType"/>     
 				<p class="alert alert-danger" *ngIf="form.controls.documentType.errors && form.controls.documentType.touched">
 					Document type name is required!!!
 				</p>
 				<p class="alert alert-danger" *ngIf="docTypeExist">
 					Document type name is exist!!!
-				</p>   
+				</p> 
+				<button class="btn btn-default" id="document_id" type="submit" [disabled]="!form.valid && !docTypeExist">Submit</button><br/>  
 			</div> 
 		</form>	
 	</div>
 	    <div class="container" >
-			<table class="table table-hover" *ngIf="docFieldList && docFieldList.length > 0">
+			<table class="table table-striped" *ngIf="docFieldList && docFieldList.length > 0">
 				<tr>
 					<th class="success">Field Name</th>
 					<th class="info">Field type</th>
@@ -39,7 +39,7 @@
 			</table>
 	    </div>
 	<div >
-		<button (click)="addField()">Add Field</button>
+		<button class="btn btn-primary" (click)="addField()">Add Field</button>
 	</div> 
 	<div *ngIf="fieldinput">    
 		<app-field [selectedDocType]="selectedDocType"></app-field>

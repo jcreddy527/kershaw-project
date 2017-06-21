@@ -1,34 +1,35 @@
 <div class="container">
-    <h3>  Create Field </h3>
-		<form [formGroup]="form" (ngSubmit)="onSubmit()">
-		    <div class="form-group">
-				<label>Field Name:</label>
-				<input type="text" formControlName="fieldName"/> 
-				<p  class="alert alert-danger" *ngIf="form.controls.fieldName.errors && form.controls.fieldName.touched">Field name is required!!!</p> 
-		    </div>
-		    <div class="form-group">
-				<label>Field Type:</label>
-		        <select class="form-group" (change)="dataTypeChange($event)" formControlName="dataType">
+<h3> Create Field </h3>
+<div>
+	<form [formGroup]="form" (ngSubmit)="onSubmit()">
+		<div class="form-group">
+			<label for="fieldName">Field Name:</label>
+			<input type="text" formControlName="fieldName" id="fieldName" class="form-control" />
+			<p class="alert alert-danger" *ngIf="form.controls.fieldName.errors && form.controls.fieldName.touched">Field name is required!!!</p>
+		</div>
+		<div class="dropdown">
+			<label for="fieldType">Field Type:</label>
+			<select class="btn btn-default dropdown-toggle" id="fieldType" class="form-group" (change)="dataTypeChange($event)" formControlName="dataType">
 					<option value="Radio" selected="selected">Radio</option>
 					<option value="Text" >Text</option>
 		        </select>
-                <p  class="alert alert-danger" *ngIf="form.controls.dataType.errors && form.controls.dataType.touched">Field Type is required!!!</p>
-		   	 </div>
-		    <div class="form-group" *ngIf="selectdatatype">
-				<label>Field Value:</label>
-				<input type="text" formControlName="fieldPossibleValue"/>
-				<p  class="alert alert-danger" *ngIf="form.controls.fieldPossibleValue.errors && form.controls.fieldPossibleValue.touched"> Field Value is required!!! </p>
-		    </div>
-		    <div class="form-group">
-				<label>Select Section:</label>
-		        <select class="form-group" formControlName="sectionName">
+			<p class="alert alert-danger" *ngIf="form.controls.dataType.errors && form.controls.dataType.touched">Field Type is required!!!</p>
+		</div>
+		<div class="form-group" *ngIf="selectdatatype">
+			<label for="fieldValue">Field Value:</label>
+			<input id="fieldValue" type="text" formControlName="fieldPossibleValue" class="form-control" />
+			<p class="alert alert-danger" *ngIf="form.controls.fieldPossibleValue.errors && form.controls.fieldPossibleValue.touched">
+				Field Value is required!!! </p>
+		</div>
+		<div class="dropdown">
+			<label for="sectionName">Select Section:</label>
+			<select  class="btn btn-default dropdown-toggle" id="sectionName" class="form-group" formControlName="sectionName">
 					<option value="Document Section 1" selected>Document Section 1</option>
 					<option value="Document Section 2" >Document Section 2</option>
 		        </select>
-				<p  class="alert alert-danger" *ngIf="form.controls.sectionName.errors && form.controls.sectionName.touched">  Scetion is required!! </p>
-		   	</div>
-			<button type="submit" [disabled]="!form.valid">Submit</button>    
-        </form>  
+			<p class="alert alert-danger" *ngIf="form.controls.sectionName.errors && form.controls.sectionName.touched"> Scetion is required!! </p>
+		</div>
+		<button class="btn btn-primary" type="submit" [disabled]="!form.valid">Submit</button>
+	</form>
 </div>
-
-   
+</div>
