@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, AbstractControl } from '@angular/forms';
 import { DealService } from '../deal/deal.service'
 
@@ -6,56 +6,62 @@ import { DealService } from '../deal/deal.service'
     selector: 'app-sectionform',
     templateUrl: './sectionform.component.html'
 })
-export class SectionFormComponent implements OnInit, OnDestroy {
+export class SectionFormComponent implements OnInit {
+    dataEntryForm: FormGroup
+    formElements: any[] = []
+    fields: any[] = []
+    docsID: number
+    secID: number
+    secName: string
 
     @Input('section')
     section: any
+
+    constructor(private fb: FormBuilder, private dealService: DealService) { }
 
     ngOnInit(): void {
         this.dataEntryForm = this.fb.group({})
         this.dealService.getDealFields(this.section.docId).subscribe(
             jsondata => {
                 this.formElements = jsondata,
-                    console.log("SectionFormComponent - : " +  JSON.stringify(this.section)),
                     this.FillFields();
-                //    console.log("this.fields : "+JSON.stringify(this.formElements))
                 error => console.log("Error: " + error)
             })
 
     }
 
-    ngOnDestroy() {
-        console.log("Section component destroying")
-    }
-
-    dataEntryForm: FormGroup
-    formElements: any[] = []
-    fields: any[] = []
-
-    constructor(private fb: FormBuilder, private dealService: DealService) { }
-
     FillFields() {
-        console.log(JSON.stringify(this.formElements))        
         this.formElements.forEach(data => {
-            if(data.documentId == this.section.docId && data.sectionName == this.section.sectionId){
+            if (data.sectionName == this.section.sectionId) {
+                this.docsID = data.documentTypeId
+                this.secID = data.sectionId
+                this.secName = data.sectionName
                 this.fields.push(data.fields)
                 data.fields.forEach(fld => {
-                    this.dataEntryForm.addControl(fld.fieldName,new FormControl(fld.fieldValue))
-                })                
+                    this.dataEntryForm.addControl(fld.fieldId, new FormControl(fld.fieldValue))
+                })
             }
         })
-
-        // for (var i = 0; i < this.formElements.length; i++) {
-            
-        //     if (this.formElements[i].sections[i].sectionName == this.section.docId) {
-        //         this.fields.push(this.formElements[i].fields)
-        //     }
-        // }
-        console.log("FillFields : " + JSON.stringify(this.fields))
     }
 
     save() {
-        console.log(this.dataEntryForm.value)
-        // this.dealService.postDealDetails(this.dataEntryForm.value);
+        let sections: any[] = []
+        let section: any = {}
+        section.documentTypeId = this.docsID
+        section.sectionId = this.secID
+        section.sectionName = this.secName
+        let fields: any[] = []
+        this.fields.forEach(fieldsArry => {
+            fieldsArry.forEach(fld => {
+                let field: any = {}
+                field.fieldId = fld.fieldId
+                field.fieldValue = this.dataEntryForm.value[fld.fieldId]
+                fields.push(field)
+            })
+        })
+        section.fields = fields
+        sections.push(section)
+        console.log(JSON.stringify(sections))
+        this.dealService.saveFields(sections)
     }
 }

@@ -1,15 +1,15 @@
 <form class='form-horizontal' novalidate (ngSubmit)="save()" [formGroup]='dataEntryForm'>
 	<fieldset>
 		<div>
-			<table border="1px" width='130%' align='right' style="margin-top:1cm">
-				<br>
-				<div *ngFor="let fields1 of fields">
-					<div *ngFor="let formfield of fields1">
+			<div *ngFor="let section of sections">
+				<table border="1px" width='130%' align='right' style="margin-top:1cm">
+					<br>
+					<div *ngFor="let formfield of section.fields">
 						<div *ngIf="formfield.dataType=='text'">
 							<div class="form-group col-md-6" [ngClass]="">
 								<label class='col-md-6 control-label'>{{formfield.fieldName}}</label>
 								<div class='col-md-6'>
-									<input class="form-control" type="text" value="{{formfield.fieldValue}}" [formControlName]="formfield.fieldId">
+									<input class="form-control" [formControlName]="formfield.fieldId" type="text" value="{{formfield.fieldValue}}">
 								</div>
 							</div>
 						</div>
@@ -24,12 +24,12 @@
 							</div>
 						</div>
 					</div>
-				</div>
-				<br>
-			</table>
+					<br>
+				</table>
+			</div>
 			<span>
-                  <button  class="btn btn-primary"  style="margin-top:2cm" type="submit" [disabled]="false">Submit</button>
-            </span>
+               <button  class="btn btn-primary" style="margin-top:2cm" type="submit" [disabled]="false">Submit</button>
+          </span>
 		</div>
 		<br>
 	</fieldset>

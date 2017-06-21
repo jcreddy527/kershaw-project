@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core'
+import { Component, Input, OnInit} from '@angular/core'
 import { FormGroup, FormControl, FormBuilder, AbstractControl } from '@angular/forms';
 import { Response } from '@angular/http'
 import { Observable } from 'rxjs/Observable'
@@ -23,14 +23,8 @@ export class DealComponent implements OnInit {
     selectedDocumentId: string
     loanforms: string[] = []
     sectionForms: string[] = []
-    constructor(private fb: FormBuilder, private dealService: DealService, private route: ActivatedRoute) {
 
-    }
-
-    ngOnDestroy() {
-        console.log("Deal component destroying : " + this.routedId)
-    }
-
+    constructor(private fb: FormBuilder, private dealService: DealService, private route: ActivatedRoute) {    }
 
     ngOnInit(): void {
         this.routedId = this.route.snapshot.params['dealComponent'];
@@ -41,47 +35,14 @@ export class DealComponent implements OnInit {
             jsondata => {
                 this.formElements = jsondata,
                     this.FillFields();
-
-                console.log("this.fields : " + JSON.stringify(this.formElements))
-                error => console.log("Error: " + error)
-            })
-        console.log("Done")
+                    error => console.log("Error: " + error)
+             })
     }
 
     FillFields() {
         for (var i = 0; i < this.formElements.length; i++) {
             this.fields.push(this.formElements[i].fields)
         }
-        console.log("AAAAAA : " + JSON.stringify(this.fields))
-    }
-
-    // createForm(jsonData: any){
-
-    //     if(this.formElements==null || this.formElements.length==0){
-    //         this.flag=true;
-    //     }
-    //     const group = this.fb.group({})        
-
-    //     this.formElements.forEach(            
-    //         formElment => {
-    //             const formCtrl = new FormControl(formElment.fieldPossibleValues.fieldValue)        
-    //             group.addControl(formElment.fields.fieldName, formCtrl)
-    //         }
-    //     )        
-    //     this.dataEntryForm = group        
-
-    //     this.formElements.forEach(
-    //         formElement => this.setUpFormElement(formElement)
-    //     )
-    // } 
-
-    // setUpFormElement(frmElem: any){
-    // }  
-
-    save() {
-        console.log("this.dataEntryForm " + this.dataEntryForm)
-        console.log('Saved: ' + JSON.stringify(this.dataEntryForm.value))
-        this.dealService.postDealDetails(this.dataEntryForm.value);
     }
 
     updateForm(docId: string) {
@@ -97,14 +58,4 @@ export class DealComponent implements OnInit {
     }
 }
 
-    //  submitForm(form:NgForm){
-    //        // console.log(this.employee)
-    //         console.log(form.value)
-    //         this.validatePrimaryLanguage(this.employee.primaryLanguage)
-    //         if(this.hasPrimaryLanguageError)
-    //             return;
-    //         this.formPoster.postEmployeeForm(form.value)
-    //         .subscribe(
-    //             data => console.log('success: ',data),
-    //             err => console.log('error: ',err))
-    //     } 
+  

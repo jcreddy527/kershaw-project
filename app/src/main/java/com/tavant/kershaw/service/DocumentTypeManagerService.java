@@ -15,4 +15,5 @@ public interface DocumentTypeManagerService {
 	public void updateDocumentWithFields(List<RequestData> requestData);
 	public void updateDocumentWithField(RequestData requestData);
 	public List<DocumentTypeVO> getDocumentTypesShallow();
+	public void updateSectionFieldsValue(List<SectionVO> sections);
 }

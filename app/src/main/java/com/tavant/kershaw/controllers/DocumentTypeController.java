@@ -46,21 +46,22 @@ public class DocumentTypeController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/sections/{documentTypeId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{documentTypeId}/sections", method = RequestMethod.GET)
 	public List<SectionVO> getSectionsByDocumentId(@PathVariable("documentTypeId") Integer documentTypeId) {
 		 List<SectionVO> documentTypeList = documentTypeManagerService.getSectionsByDocumentId(documentTypeId);
 		return documentTypeList;
 	}
 	
-	@RequestMapping(value = "/create/field", method = RequestMethod.POST)
+	@RequestMapping(value = "/field", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	public void createDocumentWithField(@RequestBody RequestData requestData) {
 		documentTypeManagerService.updateDocumentWithField(requestData);
 	}
 	
-	@RequestMapping(value = "/create/fields", method = RequestMethod.POST)
+	@RequestMapping(value = "/fields/values", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
-	public void createDocumentWithField(@RequestBody List<RequestData> requestData) {
-		documentTypeManagerService.updateDocumentWithFields(requestData);
+	public void createDocumentWithField(@RequestBody List<SectionVO> requestData) {
+		System.out.println(requestData);
+		documentTypeManagerService.updateSectionFieldsValue(requestData);
 	}
 }

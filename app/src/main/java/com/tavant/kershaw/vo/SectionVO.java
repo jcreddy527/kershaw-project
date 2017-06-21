@@ -5,6 +5,7 @@ import java.util.List;
 
 public class SectionVO {
 	
+	private int documentTypeId;
 	private int sectionId;
 	private String sectionName;
 	private List<FieldVO> fields = new ArrayList<>();
@@ -27,5 +28,10 @@ public class SectionVO {
 	public void setSectionId(int sectionId) {
 		this.sectionId = sectionId;
 	}
-	
+	public int getDocumentTypeId() {
+		return documentTypeId;
+	}
+	public void setDocumentTypeId(int documentTypeId) {
+		this.documentTypeId = documentTypeId;
+	}
 }
